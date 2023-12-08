@@ -3,19 +3,19 @@
 
 
 @mixin tablet(){
-    @media(min-width: $tablet){
+    @media(min-width: v.$tablet){
         @content;
     }
 }
 
 @mixin laptop(){
-    @media(min-width: $laptop){
+    @media(min-width: v.$laptop){
         @content;
     }
 }
 
 @mixin desktop(){
-    @media(min-width: $desktop){
+    @media(min-width: v.$desktop){
         @content;
     }
 }

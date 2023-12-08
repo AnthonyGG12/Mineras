@@ -7,13 +7,38 @@
     <link rel="stylesheet" href="build/css/app.css">
 </head>
 <body>
-    <header class="header">
-    </header>
     <main class="main">
-        <section class="seccion__tareas">
-            <h1>Hola</h1>
+        <section class="steps">
+            <div class="contenido__steps contenedor">
+                
+                <div class="encabezado">
+                    <div class="encabezado__mobile bg-primary d-md-none">
+                        <p id="encabezado" class="encabezado__mobile__p">Paso: 1</p>
+                    </div>
+
+                    <div class="encabezado__desktop d-none d-md-block"> <!-- Se muestra en desktop -->
+                        
+                    </div>
+                </div>
+
+                <div class="contenido">
+                    
+                    <div class="slider">
+                        
+                    </div>
+
+                    <div class="barra"></div> <!-- Se muestra en desktop -->
+                    
+                </div>
+
+                <div class="controles d-md-none"> <!-- Se elimina en desktop -->
+                    <div class="block__buttons d-flex">
+                        <button class="btn btn-primary text-white">Atrás</button>
+                        <button class="btn btn-primary text-white">Adelante</button>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
-    <footer class="footer"></footer>
 </body>
 </html>
