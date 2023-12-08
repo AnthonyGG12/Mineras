@@ -1,0 +1,33 @@
+@use 'utils/variables' as v;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    font-size: 1.6rem;
+    font-family: v.$fuentePrincipal;
+    line-height: 1.5;
+}
+
+h1{
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+// PRESSETS
+
+.contenedor{
+    width: 120rem;
+    max-width: 90%;
+    margin: 0 auto;
+}
