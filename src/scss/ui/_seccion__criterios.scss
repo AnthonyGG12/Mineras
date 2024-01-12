@@ -1,0 +1,48 @@
+@use 'utils/variables' as v;
+@use 'utils/mixins' as m;
+@use '../utils/' as *;
+
+
+.contenido__criterio{
+
+    margin: 1rem 0 0;
+
+    @include m.laptop { 
+        margin: 2rem 0 0;
+    }
+
+    @include m.desktop { 
+        margin: 5rem 0 0;
+    }
+
+    .BlockDigni{
+
+        .parrafoCriterios{
+
+            p{
+
+                font-size: 1.7rem;
+
+                @include m.desktop { 
+                    font-size: 2.5rem;
+                }
+            }
+        }
+
+        .imagenDigni{
+            height: 20rem;
+            @include m.bgDigni('../../build/img/1.webp', 18rem);
+
+            @include m.laptop { 
+                height: 20rem;
+                @include m.bgDigni('../../build/img/1.webp', 18rem);
+            }
+
+            @include m.desktop { 
+                height: 20rem;
+                @include m.bgDigni('../../build/img/1.webp', 18rem);
+            }
+        }
+        
+    }
+}

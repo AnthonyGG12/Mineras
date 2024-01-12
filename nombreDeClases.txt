@@ -1,0 +1,18 @@
+AQUI SE PONDRAN TODOS LAS CLASES YA USADAS Y QUE NO SE PUEDEN VOLVER A USAR
+
+→ Estas clases son del contenido principal 
+y como esta distribuido en cada seccion
+
+• block__contenido  (Esta clase contiene a los bloques 'principal' y 'mensaje')
+
+• block__principal  (Esta clase es donde ira)
+• block__mensaje    ()
+
+→ Esta clase es para los headings o titulos de cada seccion
+
+• heading__secciones
+
+→ Esta clase afecta a las cards de "AREA" y "CRITERIOS"
+
+• cards
+

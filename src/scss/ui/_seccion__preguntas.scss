@@ -1,0 +1,103 @@
+@use 'utils/variables' as v;
+@use 'utils/mixins' as m;
+
+
+// CONTENIDO PAGINA
+
+.preguntas{
+
+
+    .blockPreguntas{
+
+        .pregunta{
+            margin: 2.5rem 0;
+            background-color: v.$gray;
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            
+            @include m.tablet { 
+                padding: 3rem;
+            }
+
+            @include m.laptop { 
+                padding: 3rem 3.5rem;
+            }
+
+            @include m.desktop { 
+                padding: 3rem;
+            }
+    
+            p{
+                margin: 0;
+
+                @include m.tablet { 
+                    font-size: 2.4rem;
+                }
+
+                @include m.laptop { 
+                    font-size: 1.9rem;
+                }
+                @include m.desktop { 
+                    font-size: 2rem;
+                }
+            }
+        }
+        
+        @include m.laptop { 
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+
+            @include m.laptop { 
+                gap: 15rem;
+            }
+
+            @include m.desktop { 
+                gap: 20rem;
+            }
+        }
+    }
+
+    .preguntas__Section{
+        
+        margin: 0 0 5rem;
+
+        @include m.tablet { 
+            margin: 0 0 5rem;
+        }
+        @include m.laptop { 
+            margin: 0 0 8rem;
+        }
+
+        @include m.laptop { 
+            margin: 0 0 4rem;
+        }
+    }
+
+
+    .imagen__Section{
+
+        height: 20rem;
+
+        @include m.bgDigni('../../build/img/3.webp', 12rem);
+
+        @include m.tablet { 
+            height: 40rem;
+
+            @include m.bgDigni('../../build/img/3.webp', 20rem);
+        }
+
+        @include m.laptop { 
+            height: 30rem;
+
+            @include m.bgDigni('../../build/img/3.webp', 18rem);
+        }
+        
+        @include m.desktop { 
+            height: 33rem;
+
+            @include m.bgDigni('../../build/img/3.webp', 20rem);
+        }
+
+    }
+}

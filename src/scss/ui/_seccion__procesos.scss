@@ -1,0 +1,223 @@
+@use 'utils/mixins' as m;
+@use 'utils/variables' as v;
+@use '../custom' as *;
+
+
+.procesos {
+    &__contenido {
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
+
+        @include m.laptop { 
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+        }
+    }
+
+    .BlockDigni {
+        grid-column: 2/3;
+
+        @include m.laptop { 
+            margin: 4rem 0 0;
+            display: block;
+        }
+    
+        @include m.desktop { 
+            display: block;
+        }
+
+        &__parrafo {
+            width: 100%;
+        }
+
+        &__imagen {
+            width: 100%;
+        }
+    }
+}
+
+.blockProcesos {
+    grid-column: 1/2;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    &__i {
+        font-size: 2rem;
+    }
+
+    &__item {
+        
+        &--desplegado {
+            & .blockProcesos__contenedor {
+                background-color: $primary;
+                font-weight: 700;
+            }
+
+            & .blockProcesos__circulo {
+                &__flecha {
+                    transform: translateY(-0.15rem) rotate(180deg);
+                    color: $primary;
+                }
+            }
+        }
+    }
+
+    &__fondo {
+        border-top-right-radius: 2.5rem;
+        border-top-left-radius: 2.5rem;
+    }
+
+    &__contenedor {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: v.$gray;
+        border-radius: 2.5rem;
+        padding: 1rem 1.5rem 1rem 2.8rem;
+        transition: 0.2s; //
+        cursor: pointer;
+    }
+
+    &__div {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+    }
+
+    &__circulo {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: v.$white;
+        color: v.$bg-primary;
+
+        &__flecha {
+            transform: translateY(0.15rem);
+            transition: 0.4s;
+        }
+    }
+
+    &__proceso {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        gap: 1.5rem;
+
+        &:hover {
+            background-color: v.$bg-secondary;
+        }
+
+        &--seleccionado {
+            & .blockProcesos__collapse__circulo {
+                border: 0.2rem solid transparent;
+                background-color: $primary;
+
+                &:hover {
+                    border: 0.2rem solid transparent;
+                    color: v.$white;
+                }
+            }
+        }
+
+        @include m.tablet { 
+            grid-template-columns: auto 2fr 10rem;
+            grid-template-rows: auto;
+        }
+
+        @include m.desktop { 
+            grid-template-columns: auto 2fr 23.3rem;
+        }
+
+    }
+
+    &__collapse {
+        height: 0;
+        overflow: hidden;
+        transition: 0.4s;
+
+        &__icono {
+            display: flex;
+            align-items: center;
+
+        }
+
+        & p {
+            text-align: start;
+            display: flex;
+            align-items: center;
+        }
+
+        &__circulo {
+            border-radius: 50%;
+            border: 0.2rem solid v.$white;
+            color: v.$white;
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            transition: 0.4s;
+            cursor: pointer;
+            transition: 0.4s;
+
+            &:hover {
+                border: 0.2rem solid $primary;
+                color: $primary;
+            }
+        }
+
+        &__contenedor {
+            background-color: v.$gray;
+            border-bottom-left-radius: 2.5rem;
+            border-bottom-right-radius: 2.5rem;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }        
+
+        &__etiquetas {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            grid-column: 1/3;
+
+            @include m.tablet { 
+                flex-direction: column;
+                grid-column: 3/4;
+            }
+    
+            @include m.desktop { 
+                flex-direction: row;
+            }
+        }
+
+        &__etiqueta {
+            width: 10rem;
+            height: 5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.3rem;
+            border-radius: 3rem;
+            font-size: 1.7rem;
+            font-weight: 600;
+            cursor: default;
+            
+            &--rpa {
+                background-color: v.$blue;
+            }
+
+            &--ia {
+                background-color: v.$red;
+            }
+        }
+    }
+}

@@ -1,25 +1,63 @@
-@use 'utils/variables' as v;
+@use "utils/variables" as v;
+@use "../custom" as *;
 
-
-
-@mixin tablet(){
-    @media(min-width: v.$tablet){
-        @content;
-    }
+@mixin tablet() {
+  @media (min-width: v.$tablet) {
+    @content;
+  }
 }
 
-@mixin laptop(){
-    @media(min-width: v.$laptop){
-        @content;
-    }
+@mixin laptop() {
+  @media (min-width: v.$laptop) {
+    @content;
+  }
 }
 
-@mixin desktop(){
-    @media(min-width: v.$desktop){
-        @content;
-    }
+@mixin desktop() {
+  @media (min-width: v.$desktop) {
+    @content;
+  }
 }
 
+// CARDS
 
-// PRESSET
+@mixin card($bgColor, $borderRadius, $height, $fontSize) {
+  position: relative;
+  background-color: $bgColor;
+  border-radius: $borderRadius;
+  display: grid;
+  place-items: center;
+  border: 0.2rem solid transparent;
+  height: $height;
+  font-size: $fontSize;
+  transition: 0.3s;
+  cursor: pointer;
+  padding: .8rem;
+  color: v.$white;
 
+  &:hover {
+    border: 0.2rem solid #828282;
+  }
+
+  &--seleccionado {
+    border: 0.2rem solid $primary;
+
+    &:hover {
+      border: 0.2rem solid $primary;
+    }
+
+    & .circulo__check {
+      opacity: 1;
+    }
+  }
+}
+
+// SI ES NECESARIO AGREGARLE UN HEIGHT A LA CLASE PADRE PARA QUE EL BGSIZE HAGA
+// EFECTO EN CADA RESOLUCION
+
+@mixin bgDigni($bgImage, $bgSize){
+  background-image: url($bgImage);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: $bgSize;
+}

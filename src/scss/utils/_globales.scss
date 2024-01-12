@@ -1,33 +1,375 @@
 @use 'utils/variables' as v;
+@use 'utils/mixins' as m;
+@use '../custom' as *;
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 html{
     font-size: 62.5%;
 }
 
-body{
+body {
     font-size: 1.6rem;
-    font-family: v.$fuentePrincipal;
     line-height: 1.5;
 }
 
-h1{
+h1,h2,h3,h4{
     margin: 0;
 }
+
 
 a{
     text-decoration: none;
 }
 
+li{
+    list-style: none;
+}
+
+p{
+    margin: 0;
+}
+
+
+
 // PRESSETS
 
+.slider{
+    @include m.laptop { 
+        margin: 0 2rem;
+    }
+}
+
 .contenedor{
-    width: 120rem;
+    width: 170rem;
     max-width: 90%;
     margin: 0 auto;
 }
+
+.circulo__check{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.7rem;
+    color: v.$white;
+    background-color: $primary;
+    transition: 0.3s;
+}
+
+// PASOS (TODA LA PAGINA)
+
+.steps {
+    width: 100%;
+    height: 100vh;
+    background-color: v.$bg-primary;
+  }
+
+  .contenido__steps {
+    display: grid;
+    grid-template-rows: 12% 76% 12%; // Se divide en 3 partes
+    height: 100vh;
+  }
+
+  .encabezado {
+    display: flex;
+    align-items: center;
+
+    &__mobile {
+      width: 100%;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s all;
+      transform: translateY(0%);
+
+      &--animacion {
+        transform: translateY(-250%);
+      }
+
+      &__p {
+        text-align: center;
+        padding: 0.7rem 0;
+        font-size: 2rem;
+        width: 60%;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        margin-bottom: 0rem;
+      }
+    }
+
+    &__desktop {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      width: 100%;
+    }
+  }
+
+  .controles {
+    display: flex;
+    align-items: center;
+  }
+
+
+// PARTE SUPERIOR - CIRCULOS (DESKTOP) - PARTE 1
+
+.containerLine {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .bigLine {
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(252, 77, 25, 0) 0%,
+      rgba(252, 77, 25, 1) 10%,
+      rgba(252, 77, 25, 1) 90%,
+      rgba(252, 77, 25, 0) 100%
+    );
+    height: 0.6rem;
+  }
+  .navSteps {
+    align-items: center;
+  }
+
+  .bigStep {
+    position: relative;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0.5rem solid v.$white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+
+    &--activo {
+      border: 0.5rem solid $primary;
+    }
+  }
+
+  .smallStep {
+    position: absolute;
+    width: 1.3rem;
+    height: 1.3rem;
+    background-color: v.$white;
+    border-radius: 50%;
+    transition: 0.4s;
+    
+
+    &--activo {
+      background-color: $primary;
+    }
+  }
+
+  .smallLine {
+    width: 2rem;
+    height: 0.4rem;
+    background-color: v.$white;
+    transition: 0.2s;
+
+    &--activo {
+      background-color: $primary;
+    }
+  }
+  
+
+// PARTE INTERMEDIA - CONTENIDO - PARTE 2
+
+.contenido {
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+    .containerLine {
+      justify-content: center;
+      height: 100%;
+    }
+
+    .line {
+      height: 100%;
+      width: 0.6rem;
+      background: linear-gradient(
+        180deg,
+        rgba(252, 77, 25, 0) 0%,
+        rgba(252, 77, 25, 1) 10%,
+        rgba(252, 77, 25, 1) 90%,
+        rgba(252, 77, 25, 0) 100%
+      );
+    }
+  }
+
+  .slider {
+    overflow: hidden;
+
+    &__contenedor {
+      display: flex;
+      width: 900%;
+      height: 100%;
+      transition: 0.4s;
+    }
+
+    &__seccion {
+      width: 100%;
+      height: 100%;
+      padding: 0 2rem;
+      overflow-y: auto;
+      font-size: 1.4rem;
+      color: $white;
+    }
+
+    .resaltante {
+      color: $primary;
+    }
+
+  }
+
+
+// PARTE INFERIOR - CONTROLES - PARTE 3
+
+.block__buttons {
+    width: 100%;
+    justify-content: space-between;
+
+    .buttons {
+      width: 4.5rem;
+      height: 4.5rem;
+      font-size: 1.9rem;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &--inactivo {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      @include m.tablet() {
+        width: 6.5rem;
+        height: 6.5rem;
+        font-size: 2.7rem;
+      }
+    }
+}
+
+// CLASES CON MEDIA QUERIES PREESTABLECIDAD
+
+.block__contenido{
+
+    @include m.tablet {
+        .block__mensaje {
+            &__parrafo {
+                font-size: 2.8rem;
+                margin: 2rem 0 0;
+            }
+        }
+    }
+
+    @include m.laptop { 
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        &--invertido {
+            flex-direction: column-reverse;
+        }
+
+        .block__mensaje{
+            display: flex;
+            justify-content: space-between;
+
+            &__parrafo {
+                margin: 0;
+                font-size: 2.4rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50%;
+            }
+        }
+
+    }
+
+    @include m.desktop { 
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+
+        .block__principal{
+            grid-column: 1 / 7;
+            
+        }
+
+        .block__mensaje{
+            grid-column: 8 / 10;
+
+            &__parrafo {
+                width: 100%;
+                padding: 2rem 3rem;
+            }
+        }
+
+        &--invertido {
+
+            .block__mensaje{
+                grid-column: 1 / 3;
+            }
+
+            .block__principal{
+                grid-column: 4 / 10;
+            }
+            
+        }
+
+    }
+
+    
+}
+
+// TITULO DE CADA SECCION
+
+.heading__secciones{
+    text-align: center;
+    color: $primary;
+    font-weight: 600;
+    font-size: 2.5rem;
+    padding: 2rem 0;
+
+    @include m.tablet { 
+        font-size: 3.5rem;
+    }
+}
+
+// CARDS
+
+.card {
+    position: relative;
+
+
+    @include m.card(v.$gray, 1.5rem, 10rem, 1.6rem);
+    margin: 2rem 0;
+
+    @include m.tablet { 
+        @include m.card(v.$gray, 1.5rem, 20rem, 2rem);
+    }
+
+    @include m.laptop { 
+        @include m.card(v.$gray, 1.5rem, 20rem, 1.8rem);
+        margin: 0;
+    }
+}
+
