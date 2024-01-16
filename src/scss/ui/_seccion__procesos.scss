@@ -48,6 +48,8 @@
     }
 
     &__item {
+
+        margin: 2rem 0;
         
         &--desplegado {
             & .blockProcesos__contenedor {
@@ -61,6 +63,10 @@
                     color: $primary;
                 }
             }
+        }
+
+        @include m.laptop { 
+            margin: .5rem 0;
         }
     }
 

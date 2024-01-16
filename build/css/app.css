@@ -12822,6 +12822,9 @@ p {
 .blockProcesos__i {
   font-size: 2rem;
 }
+.blockProcesos__item {
+  margin: 2rem 0;
+}
 .blockProcesos__item--desplegado .blockProcesos__contenedor {
   background-color: #FC4D19;
   font-weight: 700;
@@ -12829,6 +12832,11 @@ p {
 .blockProcesos__item--desplegado .blockProcesos__circulo__flecha {
   transform: translateY(-0.15rem) rotate(180deg);
   color: #FC4D19;
+}
+@media (min-width: 1024px) {
+  .blockProcesos__item {
+    margin: 0.5rem 0;
+  }
 }
 .blockProcesos__fondo {
   border-top-right-radius: 2.5rem;
