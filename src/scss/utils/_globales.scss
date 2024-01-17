@@ -107,6 +107,7 @@ p{
         border-radius: 0.5rem;
         font-weight: 600;
         margin-bottom: 0rem;
+        color: v.$white;
       }
     }
 
@@ -270,6 +271,9 @@ p{
 // CLASES CON MEDIA QUERIES PREESTABLECIDAD
 
 .block__contenido{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 
     @include m.tablet {
         .block__mensaje {

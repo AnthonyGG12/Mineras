@@ -12263,6 +12263,7 @@ p {
   border-radius: 0.5rem;
   font-weight: 600;
   margin-bottom: 0rem;
+  color: #fff;
 }
 .encabezado__desktop {
   display: grid;
@@ -12390,6 +12391,11 @@ p {
   }
 }
 
+.block__contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
 @media (min-width: 768px) {
   .block__contenido .block__mensaje__parrafo {
     font-size: 2.8rem;
@@ -12781,16 +12787,10 @@ p {
   }
 }
 
-.procesos__contenido {
+.procesos .block__principal {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
-}
-@media (min-width: 1024px) {
-  .procesos__contenido {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-  }
+  gap: 1.5rem;
 }
 .procesos .BlockDigni {
   grid-column: 2/3;
@@ -12821,9 +12821,6 @@ p {
 }
 .blockProcesos__i {
   font-size: 2rem;
-}
-.blockProcesos__item {
-  margin: 2rem 0;
 }
 .blockProcesos__item--desplegado .blockProcesos__contenedor {
   background-color: #FC4D19;
@@ -12873,12 +12870,14 @@ p {
 }
 .blockProcesos__proceso {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
   gap: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 2rem;
 }
 .blockProcesos__proceso:hover {
-  background-color: #343A43;
+  background-color: #303843;
 }
 .blockProcesos__proceso--seleccionado .blockProcesos__collapse__circulo {
   border: 0.2rem solid transparent;
@@ -12890,13 +12889,8 @@ p {
 }
 @media (min-width: 768px) {
   .blockProcesos__proceso {
-    grid-template-columns: auto 2fr 10rem;
-    grid-template-rows: auto;
-  }
-}
-@media (min-width: 1440px) {
-  .blockProcesos__proceso {
     grid-template-columns: auto 2fr 23.3rem;
+    grid-template-rows: auto;
   }
 }
 .blockProcesos__collapse {
@@ -12907,11 +12901,30 @@ p {
 .blockProcesos__collapse__icono {
   display: flex;
   align-items: center;
+  justify-content: center;
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+@media (min-width: 768px) {
+  .blockProcesos__collapse__icono {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
 }
 .blockProcesos__collapse p {
   text-align: start;
   display: flex;
   align-items: center;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  .blockProcesos__collapse p {
+    grid-column: 2/3;
+    grid-row: 1/2;
+    text-align: start;
+  }
 }
 .blockProcesos__collapse__circulo {
   border-radius: 50%;
@@ -12938,19 +12951,24 @@ p {
   padding: 3rem 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
 }
 .blockProcesos__collapse__etiquetas {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  grid-column: 1/3;
+  grid-column: 1/2;
 }
 @media (min-width: 768px) {
   .blockProcesos__collapse__etiquetas {
-    flex-direction: column;
+    flex-direction: row;
+  }
+}
+@media (min-width: 768px) and (min-width: 768px) {
+  .blockProcesos__collapse__etiquetas {
     grid-column: 3/4;
+    grid-row: 1/2;
   }
 }
 @media (min-width: 1440px) {
@@ -12959,16 +12977,24 @@ p {
   }
 }
 .blockProcesos__collapse__etiqueta {
-  width: 10rem;
-  height: 5rem;
+  width: 7.5rem;
+  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.3rem;
+  gap: 1rem;
   border-radius: 3rem;
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   font-weight: 600;
   cursor: default;
+}
+@media (min-width: 768px) {
+  .blockProcesos__collapse__etiqueta {
+    width: 10rem;
+    height: 5rem;
+    font-size: 1.7rem;
+    gap: 1.3rem;
+  }
 }
 .blockProcesos__collapse__etiqueta--rpa {
   background-color: #399BE2;

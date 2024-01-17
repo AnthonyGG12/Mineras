@@ -182,7 +182,7 @@ itemsAreas.forEach(elemento => {
 
 //Asignar cada area seleccionada a un div
 
-let blockProcesos = document.querySelector(".procesos .blockProcesos");
+let blockProcesos = document.querySelector(".procesos .block__principal");
 
 for (let i=0; i<blockProcesos.children.length; i++) {
     let nombreArea = blockProcesos.children[i].querySelector(".blockProcesos__span").innerHTML.replace("Área de ", "").toLowerCase();
