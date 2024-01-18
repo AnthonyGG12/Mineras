@@ -3,46 +3,26 @@
 @use '../utils/' as *;
 
 
-.contenido__criterio{
+.criterios{
+    
 
-    margin: 1rem 0 0;
+    .imagenDigni{
+        height: 20rem;
 
-    @include m.laptop { 
-        margin: 2rem 0 0;
-    }
-
-    @include m.desktop { 
-        margin: 5rem 0 0;
-    }
-
-    .BlockDigni{
-
-        .parrafoCriterios{
-
-            p{
-
-                font-size: 1.7rem;
-
-                @include m.desktop { 
-                    font-size: 2.5rem;
-                }
-            }
+        @include m.bgDigni('../../build/img/1.webp', 18rem);
+      
+        @include m.laptop { 
+            width: 50%;
+            height: 40rem;
+            @include m.bgDigni('../../build/img/6.webp', 28rem);
+            transform: rotateY(180deg)
         }
-
-        .imagenDigni{
-            height: 20rem;
-            @include m.bgDigni('../../build/img/1.webp', 18rem);
-
-            @include m.laptop { 
-                height: 20rem;
-                @include m.bgDigni('../../build/img/1.webp', 18rem);
-            }
-
-            @include m.desktop { 
-                height: 20rem;
-                @include m.bgDigni('../../build/img/1.webp', 18rem);
-            }
+      
+        @include m.desktop { 
+            width: unset;
+            height: 50rem;
+            @include m.bgDigni('../../build/img/1.webp', 28rem);
         }
-        
-    }
+      }
 }
+

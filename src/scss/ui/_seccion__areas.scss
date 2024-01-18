@@ -5,6 +5,19 @@
 
 .area{
 
+    .block__contenido{
+        flex-direction: column-reverse;
+
+        @include m.laptop { 
+            flex-direction: column;
+        }
+
+        @include m.desktop{
+            flex-direction: unset;
+        }
+    }
+
+
     &::-webkit-scrollbar {
         width: 1px;
         background: transparent;
@@ -14,11 +27,31 @@
         overflow: hidden;
     }
 
+
+    .imagenDigni{
+        height: 20rem;
+        
+        @include m.bgDigni('../../build/img/4.webp', 18rem);
+      
+        @include m.laptop { 
+            width: 50%;
+            height: 40rem;
+            @include m.bgDigni('../../build/img/5.webp', 38rem);
+        }
+      
+        @include m.desktop { 
+            width: unset;
+            height: 50rem;
+            @include m.bgDigni('../../build/img/4.webp', 18rem);
+        }
+      }
+
 }
 
 // ------------------ESTE ES EL BLOQUE DE CARDS------------------
 
 .block__principal{
+
 
     &::-webkit-scrollbar {
         width: 8px;
@@ -49,97 +82,6 @@
         overflow-y: auto;
     }
 
-}
-
-// -----------------ESTE ES EL BLOQUE DE DIGNI CON PARRAFO E IMAGEN-----------------
-
-.BlockDigni{
-
-    margin: 1rem 0 2rem;
-
-    // -------------------------------------------
-
-    // ESTA ETIQUETA GRID SOLO AFECTA AL DESKTOP
-
-    grid-column: 7 / 10;
-
-    // -------------------------------------------
-
-    // EN ESTA SECCION EL BLOCK DIGNI ESTA A LA IZQUIERDA
-
-    @include m.laptop { 
-        margin: 4rem 0 0;
-        display: flex;
-    }
-
-    @include m.desktop { 
-        margin: 0;
-        flex-direction: column;
-    }
-
-    
-
-    .BlockDigni__parrafo{
-        
-        font-size: 2rem;
-        text-align: center;
-        margin: 0 0 4rem;
-
-        @include m.tablet { 
-            font-size: 2.8rem;
-        }
-
-        @include m.laptop { 
-            margin: 0;
-            font-size: 2.4rem;
-        }
-
-        @include m.tablet { 
-            margin: 2rem 0 0;
-        }
-
-        @include m.laptop { 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50%;
-            margin: 0;
-        }
-
-        @include m.desktop { 
-            width: 100%;
-            padding: 2rem 3rem;
-        }
-
-    }
-
-    .BlockDigni__imagen{
-        height: 20rem;
-
-        @include m.bgDigni('../../build/img/1.webp', 18rem);
-
-        @include m.tablet { 
-            height: 30rem;
-            @include m.bgDigni('../../build/img/1.webp', 30rem);
-        }
-
-        @include m.laptop {
-            width: 50%;
-            height: 30rem;
-            @include m.bgDigni('../../build/img/6.webp', 25rem);
-            transform: rotateY(180deg);
-        }
-
-        @include m.desktop {
-            width: 50%;
-            height: 30rem;
-            @include m.bgDigni('../../build/img/1.webp', 25rem);
-            margin: 0 auto;
-        }
-
-    }
-
-    
 }
 
 
