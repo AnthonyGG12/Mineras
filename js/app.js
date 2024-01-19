@@ -198,6 +198,8 @@ for (let i=0; i<blockProcesos.children.length; i++) {
 // Mostrar procesos de las areas seleccionadas
 
 function mostrarProcesos() {
+    let siElementos = false;
+
     for (let i=0; i<areas.length; i++) {
 
         for(let j=0; j<blockProcesos.children.length; j++) {
@@ -206,12 +208,19 @@ function mostrarProcesos() {
             if (areas[i][0].toLowerCase() === nombreArea) {
                 if (areas[i][1]) {
                     blockProcesos.children[j].style.display = "block";
+                    siElementos = true;
                 } else {
                     blockProcesos.children[j].style.display = "none";
                 }
             }
         }
         
+    }
+
+    if(siElementos) {
+        blockProcesos.children[blockProcesos.children.length-1].style.display = "none";
+    } else {
+        blockProcesos.children[blockProcesos.children.length-1].style.display = "block";
     }
 }
 
