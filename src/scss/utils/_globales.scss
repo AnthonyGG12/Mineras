@@ -305,6 +305,7 @@ p{
         .block__mensaje{
             display: flex;
             justify-content: space-between;
+            align-items: center;
             gap: 2rem;
 
             &__parrafo {
@@ -332,6 +333,7 @@ p{
 
         .block__mensaje {
           flex-direction: column;
+          align-items: unset;
           width: 30%;
 
           &__parrafo {

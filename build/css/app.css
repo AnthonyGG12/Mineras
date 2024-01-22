@@ -12420,6 +12420,7 @@ p {
   .block__contenido .block__mensaje {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 2rem;
   }
   .block__contenido .block__mensaje__parrafo {
@@ -12441,6 +12442,7 @@ p {
   }
   .block__contenido .block__mensaje {
     flex-direction: column;
+    align-items: unset;
     width: 30%;
   }
   .block__contenido .block__mensaje__parrafo {
@@ -12757,33 +12759,35 @@ p {
   flex-direction: column;
   gap: 1.5rem;
 }
-.procesos .BlockDigni {
-  grid-column: 2/3;
+.procesos .imagenDigni {
+  height: 20rem;
+  background-image: url("../../build/img/1.webp");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 15rem;
 }
 @media (min-width: 1024px) {
-  .procesos .BlockDigni {
-    margin: 4rem 0 0;
-    display: block;
+  .procesos .imagenDigni {
+    width: 50%;
+    height: 40rem;
+    background-image: url("../../build/img/6.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 28rem;
+    transform: rotateY(180deg);
   }
 }
 @media (min-width: 1440px) {
-  .procesos .BlockDigni {
-    display: block;
+  .procesos .imagenDigni {
+    width: unset;
+    height: 50rem;
+    background-image: url("../../build/img/3.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 15rem;
   }
 }
-.procesos .BlockDigni__parrafo {
-  width: 100%;
-}
-.procesos .BlockDigni__imagen {
-  width: 100%;
-}
 
-.blockProcesos {
-  grid-column: 1/2;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
 .blockProcesos__i {
   font-size: 2rem;
 }
@@ -12802,6 +12806,7 @@ p {
 }
 .blockProcesos__item--ultimo .blockProcesos__contenedor {
   cursor: default;
+  padding: 1.2rem 1.5rem 1.2rem 2.8rem;
 }
 .blockProcesos__fondo {
   border-top-right-radius: 2.5rem;
