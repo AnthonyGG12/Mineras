@@ -13289,3 +13289,68 @@ p {
     background-size: 28rem;
   }
 }
+
+.prioriza .block__principal .caja__criterios {
+  background-color: #343A43;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 100%;
+}
+.prioriza .block__principal .caja__criterios h3 {
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .prioriza .block__principal .caja__criterios h3 {
+    text-align: left;
+  }
+}
+.prioriza .block__principal .caja__criterios .caja__botones {
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem 0 0;
+}
+.prioriza .block__principal .caja__criterios .caja__botones button {
+  color: #fff;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 10rem;
+}
+@media (min-width: 1024px) {
+  .prioriza .block__principal .caja__criterios .caja__botones button {
+    font-size: 1.8rem;
+    width: 16rem;
+  }
+}
+@media (min-width: 1024px) {
+  .prioriza .block__principal {
+    display: flex;
+  }
+}
+.prioriza .block__mensaje .imagenDigni {
+  height: 20rem;
+  background-image: url("../../build/img/1.webp");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 18rem;
+}
+@media (min-width: 1024px) {
+  .prioriza .block__mensaje .imagenDigni {
+    width: 50%;
+    height: 40rem;
+    background-image: url("../../build/img/6.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 28rem;
+    transform: rotateY(180deg);
+  }
+}
+@media (min-width: 1440px) {
+  .prioriza .block__mensaje .imagenDigni {
+    width: unset;
+    height: 50rem;
+    background-image: url("../../build/img/4.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 25rem;
+  }
+}

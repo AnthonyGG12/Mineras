@@ -314,10 +314,10 @@ blockBuscadorContenedor.addEventListener('mousedown', function(event) {
         blockBuscadorProc.classList.remove("blockBuscador__proc--animacion")
         setTimeout(()=>{
             blockBuscadorContenedor.classList.remove("blockBuscador__contenedor--animacion");
-        }, 400) // duracion de la animacion anterior + 0.1s de espera
+        }, 100) // duracion de la animacion anterior + 0.1s de espera
         setTimeout(()=>{
             blockBuscadorContenedor.style.display = "none";
-        }, 1000) // 0.4s + 0.1s de espera + 0.5s animacion del anterior animacion
+        }, 500) // 0.4s + 0.1s de espera + 0.5s animacion del anterior animacion
     }
 });
 

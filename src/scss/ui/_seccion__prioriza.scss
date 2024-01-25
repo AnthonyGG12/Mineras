@@ -1,0 +1,73 @@
+@use 'utils/mixins' as m;
+@use 'utils/variables' as v;
+@use '../custom' as *;
+
+.prioriza{
+
+    .block__principal{
+
+        .caja__criterios{
+            background-color: v.$bg-secondary;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 100%;
+
+            h3{
+                text-align: center;
+
+                @include m.laptop { 
+                    text-align: left;
+                }
+            }
+
+            .caja__botones{
+                display: flex;
+                justify-content: space-between;
+                margin: 2rem 0 0;
+
+                button{
+                    color: v.$white;
+                    padding: 1rem;
+                    border-radius: 1rem;
+                    width: 10rem;
+                    
+                    
+                    @include m.laptop { 
+                        font-size: 1.8rem;
+                        width: 16rem;
+                    }
+                }
+            }
+
+        }
+        
+        @include m.laptop { 
+            display: flex;
+        }
+    }
+
+    .block__mensaje{
+
+        .imagenDigni{
+            height: 20rem;
+    
+            @include m.bgDigni('../../build/img/1.webp', 18rem);
+          
+            @include m.laptop { 
+                width: 50%;
+                height: 40rem;
+                @include m.bgDigni('../../build/img/6.webp', 28rem);
+                transform: rotateY(180deg)
+            }
+          
+            @include m.desktop { 
+                width: unset;
+                height: 50rem;
+                @include m.bgDigni('../../build/img/4.webp', 25rem);
+            }
+          }
+    }
+
+    
+
+}
