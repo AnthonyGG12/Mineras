@@ -13,7 +13,7 @@
         }
 
         @include m.desktop{
-            flex-direction: unset;
+            flex-direction: row-reverse;
         }
     }
 
