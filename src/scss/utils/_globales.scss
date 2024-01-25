@@ -68,6 +68,12 @@ p{
     transition: 0.3s;
 }
 
+.card--core {
+  & .circulo__check{
+    background-color: v.$blue;
+}
+}
+
 // PASOS (TODA LA PAGINA)
 
 .steps {

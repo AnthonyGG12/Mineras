@@ -12227,6 +12227,10 @@ p {
   transition: 0.3s;
 }
 
+.card--core .circulo__check {
+  background-color: #399BE2;
+}
+
 .steps {
   width: 100%;
   height: 100vh;
@@ -12504,6 +12508,15 @@ p {
 .card--seleccionado .circulo__check {
   opacity: 1;
 }
+.card--core.card--seleccionado {
+  border: 0.2rem solid #399BE2;
+}
+.card--core.card--seleccionado:hover {
+  border: 0.2rem solid #399BE2;
+}
+.card--core.card--seleccionado .circulo__check {
+  opacity: 1;
+}
 @media (min-width: 768px) {
   .card {
     position: relative;
@@ -12530,6 +12543,15 @@ p {
     border: 0.2rem solid #FC4D19;
   }
   .card--seleccionado .circulo__check {
+    opacity: 1;
+  }
+  .card--core.card--seleccionado {
+    border: 0.2rem solid #399BE2;
+  }
+  .card--core.card--seleccionado:hover {
+    border: 0.2rem solid #399BE2;
+  }
+  .card--core.card--seleccionado .circulo__check {
     opacity: 1;
   }
 }
@@ -12560,6 +12582,15 @@ p {
     border: 0.2rem solid #FC4D19;
   }
   .card--seleccionado .circulo__check {
+    opacity: 1;
+  }
+  .card--core.card--seleccionado {
+    border: 0.2rem solid #399BE2;
+  }
+  .card--core.card--seleccionado:hover {
+    border: 0.2rem solid #399BE2;
+  }
+  .card--core.card--seleccionado .circulo__check {
     opacity: 1;
   }
 }
@@ -12755,9 +12786,29 @@ p {
 }
 
 .procesos .block__principal {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+  padding: 0;
+  height: 100%;
+  gap: 2rem;
+}
+.procesos .blockProcesos__items {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow-y: auto;
+  padding: 0 1rem;
+}
+.procesos .blockProcesos__items::-webkit-scrollbar {
+  width: 0.8rem;
+  background: transparent;
+  overflow: hidden;
+}
+.procesos .blockProcesos__items::-webkit-scrollbar-thumb {
+  background: #FC4D19;
+  border-radius: 0.8rem;
+  border-right: 0.2rem solid #13161C;
 }
 .procesos .imagenDigni {
   height: 20rem;
@@ -12792,12 +12843,18 @@ p {
   font-size: 2rem;
 }
 .blockProcesos__item--desplegado .blockProcesos__contenedor {
-  background-color: #FC4D19;
+  background: linear-gradient(90deg, rgb(252, 77, 25) 0%, rgba(252, 77, 25, 0.25) 100%);
   font-weight: 700;
 }
 .blockProcesos__item--desplegado .blockProcesos__circulo__flecha {
   transform: translateY(-0.15rem) rotate(180deg);
   color: #FC4D19;
+}
+.blockProcesos__item--core.blockProcesos__item--desplegado .blockProcesos__contenedor {
+  background: linear-gradient(90deg, rgb(57, 155, 226) 0%, rgba(57, 155, 226, 0.25) 100%);
+}
+.blockProcesos__item--core.blockProcesos__item--desplegado .blockProcesos__circulo__flecha {
+  color: #399BE2;
 }
 @media (min-width: 1024px) {
   .blockProcesos__item {
@@ -12816,7 +12873,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #242B35;
+  background: #242B35;
   border-radius: 2.5rem;
   padding: 1rem 1.5rem 1rem 2.8rem;
   transition: 0.2s;
@@ -12852,13 +12909,17 @@ p {
 .blockProcesos__proceso:hover {
   background-color: #303843;
 }
-.blockProcesos__proceso--seleccionado .blockProcesos__collapse__circulo {
-  border: 0.2rem solid transparent;
-  background-color: #FC4D19;
+.blockProcesos__proceso:hover .blockProcesos__collapse__circulo {
+  border: 0.2rem solid #FC4D19;
+  color: #FC4D19;
 }
-.blockProcesos__proceso--seleccionado .blockProcesos__collapse__circulo:hover {
+.blockProcesos__proceso--seleccionado .blockProcesos__collapse__circulo {
+  background-color: #FC4D19;
   border: 0.2rem solid transparent;
+}
+.blockProcesos__proceso--seleccionado:hover .blockProcesos__collapse__circulo {
   color: #fff;
+  border: 0.2rem solid transparent;
 }
 @media (min-width: 768px) {
   .blockProcesos__proceso {
@@ -12912,10 +12973,6 @@ p {
   transition: 0.4s;
   cursor: pointer;
   transition: 0.4s;
-}
-.blockProcesos__collapse__circulo:hover {
-  border: 0.2rem solid #FC4D19;
-  color: #FC4D19;
 }
 .blockProcesos__collapse__contenedor {
   background-color: #242B35;
@@ -12976,6 +13033,234 @@ p {
   background-color: #E8432E;
 }
 
+.blockProcesos__item--core .blockProcesos__proceso:hover .blockProcesos__collapse__circulo {
+  color: #399BE2;
+  border: 0.2rem solid #399BE2;
+}
+.blockProcesos__item--core .blockProcesos__proceso--seleccionado .blockProcesos__collapse__circulo {
+  background-color: #399BE2;
+}
+.blockProcesos__item--core .blockProcesos__proceso--seleccionado:hover .blockProcesos__collapse__circulo {
+  color: #fff;
+  border: 0.2rem solid transparent;
+}
+
+.blockBuscador {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  padding-right: 2rem;
+  padding-bottom: 0.5rem;
+}
+.blockBuscador__button {
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #FC4D19;
+  color: #fff;
+  transition: 0.3s;
+}
+.blockBuscador__button:hover {
+  background-color: #13161c;
+  box-shadow: 0px 0px 15px #fff;
+}
+.blockBuscador__button:hover .blockBuscador__i {
+  transform: scale(1.5);
+}
+.blockBuscador__i {
+  animation: mover 10s infinite;
+}
+.blockBuscador__contenedor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  display: none;
+  justify-content: center;
+}
+.blockBuscador__contenedor--animacion .blockBuscador__contenido {
+  transform: translateY(12vh);
+}
+.blockBuscador__contenido {
+  width: 90%;
+  max-width: 55rem;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  transition: 0.5s;
+  transform: translateY(-110%);
+}
+.blockBuscador__group {
+  width: 100%;
+  background-color: #242B35;
+  border-radius: 1.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 2rem;
+}
+.blockBuscador__group .blockBuscador__i {
+  transition: 0.3s;
+  color: #c9c9c9;
+}
+.blockBuscador__group .blockBuscador__i--animacion {
+  font-size: 1.6rem;
+  color: #FC4D19;
+}
+.blockBuscador__input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #c9c9c9;
+}
+.blockBuscador__input:focus {
+  color: #fff;
+}
+.blockBuscador__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.blockBuscador__list__strong {
+  color: #399BE2;
+}
+.blockBuscador__list .blockProcesos__proceso {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto;
+}
+.blockBuscador__list .blockProcesos__proceso.blockProcesos__proceso--core:hover .blockProcesos__collapse__circulo {
+  color: #399BE2;
+  border: 0.2rem solid #399BE2;
+}
+.blockBuscador__list .blockProcesos__proceso.blockProcesos__proceso--core.blockProcesos__proceso--seleccionado .blockProcesos__collapse__circulo {
+  background-color: #399BE2;
+}
+.blockBuscador__list .blockProcesos__proceso.blockProcesos__proceso--core.blockProcesos__proceso--seleccionado:hover .blockProcesos__collapse__circulo {
+  color: #fff;
+  border: 0.2rem solid transparent;
+}
+.blockBuscador__list .blockProcesos__proceso.blockProcesos__proceso--core strong {
+  color: #399BE2;
+}
+.blockBuscador__list .blockProcesos__collapse__circulo {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
+}
+.blockBuscador__list .blockProcesos__collapse__p {
+  text-align: center;
+}
+.blockBuscador__list .blockProcesos__collapse__p p {
+  text-wrap: pretty;
+}
+.blockBuscador__list .blockProcesos__collapse__etiquetas {
+  flex-direction: row;
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta {
+  width: 7rem;
+  height: 3rem;
+  font-size: 1.3rem;
+  position: relative;
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta span {
+  position: absolute;
+  opacity: 0;
+  transition: 0.3s;
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta i {
+  transition: 0.3s;
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta:hover i {
+  transform: translateX(-1.5rem);
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta:hover i.e2 {
+  transform: translateX(-1rem);
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta:hover span {
+  opacity: 1;
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta:hover span.e1 {
+  transform: translateX(1.3rem) translateY(0.1rem);
+}
+.blockBuscador__list .blockProcesos__collapse__etiqueta:hover span.e2 {
+  transform: translateX(1rem) translateY(0.1rem);
+}
+@media (min-width: 768px) {
+  .blockBuscador__list .blockProcesos__proceso {
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto;
+  }
+  .blockBuscador__list .blockProcesos__collapse__etiquetas {
+    flex-direction: column;
+  }
+  .blockBuscador__list .blockProcesos__collapse__p {
+    text-align: unset;
+  }
+}
+.blockBuscador__list .blockProcesos__proceso {
+  opacity: 1;
+  transition: 0.3s;
+}
+.blockBuscador__list .blockProcesos__proceso--eliminar {
+  opacity: 0;
+}
+.blockBuscador__proc {
+  background-color: #242B35;
+  border-radius: 1.5rem;
+  overflow-y: hidden;
+  height: 0;
+  transition: 0.5s;
+}
+.blockBuscador__proc--animacion {
+  height: 55rem;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+.blockBuscador__proc .blockProcesos__contenedor {
+  display: none;
+  padding: 1rem;
+}
+@media (min-width: 768px) {
+  .blockBuscador__proc .blockProcesos__contenedor {
+    padding: 1rem 1.5rem 1rem 2.8rem;
+  }
+}
+.blockBuscador__proc .blockProcesos__contenedor--eliminar {
+  opacity: 0;
+}
+.blockBuscador__proc::-webkit-scrollbar {
+  width: 0.8rem;
+  background: transparent;
+  overflow: hidden;
+}
+.blockBuscador__proc::-webkit-scrollbar-thumb {
+  background: #FC4D19;
+  border-radius: 0.8rem;
+  border-right: 0.2rem solid #13161C;
+}
+.blockBuscador__proc .blockProcesos__contenedor:hover {
+  background-color: #303843;
+}
+
+@keyframes mover {
+  0%, 90% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .criterios .imagenDigni {
   height: 20rem;
   background-image: url("../../build/img/1.webp");

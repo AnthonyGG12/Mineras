@@ -51,6 +51,18 @@
       opacity: 1;
     }
   }
+
+  &--core.card--seleccionado {
+    border: 0.2rem solid v.$blue;
+
+    &:hover {
+      border: 0.2rem solid v.$blue;
+    }
+
+    & .circulo__check {
+      opacity: 1;
+    }
+  }
 }
 
 // SI ES NECESARIO AGREGARLE UN HEIGHT A LA CLASE PADRE PARA QUE EL BGSIZE HAGA

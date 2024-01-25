@@ -182,14 +182,16 @@ itemsAreas.forEach(elemento => {
 
 //Asignar cada area seleccionada a un div
 
-let blockProcesos = document.querySelector(".procesos .block__principal");
+let blockProcesos = document.querySelector(".procesos .blockProcesos__items");
 
 for (let i=0; i<blockProcesos.children.length; i++) {
-    let nombreArea = blockProcesos.children[i].querySelector(".blockProcesos__span").innerHTML.replace("Área de ", "").toLowerCase();
+    if (i != blockProcesos.children.length-1) {
+        let nombreArea = blockProcesos.children[i].querySelector(".blockProcesos__area").innerHTML.toLowerCase();
 
-    for (let j=0; j<areas.length; j++) {
-        if (areas[j][0].toLowerCase() == nombreArea) {
-            blockProcesos.children[i].setAttribute("data-nombre_area", `${nombreArea}`);
+        for (let j=0; j<areas.length; j++) {
+            if (areas[j][0].toLowerCase() == nombreArea) {
+                blockProcesos.children[i].setAttribute("data-nombre_area", `${nombreArea}`);
+            }
         }
     }
 }
@@ -233,6 +235,269 @@ const procesos = document.querySelectorAll(".blockProcesos__proceso");
 
 for (let i=0; i<procesos.length; i++) {
     procesos[i].addEventListener("click", ()=>{
-        procesos[i].classList.toggle("blockProcesos__proceso--seleccionado");
+        seleccionarProceso(procesos[i], i);
     })
 }
+
+function seleccionarProceso(elemento, posicicion) {
+    // * Mostar visualmente que se selecciono
+    elemento.classList.toggle("blockProcesos__proceso--seleccionado");
+
+    // * Cambiar el estado del arreglo
+    if (todosProcesos[posicicion].seleccionado) {
+        todosProcesos[posicicion].seleccionado = false;
+    } else {
+        todosProcesos[posicicion].seleccionado = true;
+    }
+    
+    // * Actualizar diseños
+    actualizarProcesos(posicicion)
+}
+
+// ! OBTENER INFORMACION DE TODOS LOS PROCESOS 
+
+const todosProcesos = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const blockProcesosCollapseP = document.querySelectorAll(".blockProcesos__items .blockProcesos__collapse__p");
+  
+    for (let i=0; i<blockProcesosCollapseP.length; i++) {
+
+        let rpa = blockProcesosCollapseP[i].nextElementSibling.querySelector(".blockProcesos__collapse__etiqueta--rpa");
+        let hasRpa = false;
+
+        if (rpa !== null) {
+            hasRpa = true;
+        }
+
+        let ia = blockProcesosCollapseP[i].nextElementSibling.querySelector(".blockProcesos__collapse__etiqueta--ia");
+        let hasIa = false;
+
+        if (ia !== null) {
+            hasIa = true;
+        }
+
+        let nombre = blockProcesosCollapseP[i].innerHTML.replace(/\s+/g, ' ').trim(); // Reemplazar múltiples espacios con un solo espacio y luego hacer trim
+        let area = blockProcesosCollapseP[i].parentNode.parentNode.parentNode.parentNode.querySelector(".blockProcesos__area").innerHTML;
+
+        todosProcesos.push(
+            {
+                id: i,
+                nombre: nombre,
+                area: area,
+                rpa: hasRpa,
+                ia: hasIa,
+                seleccionado: false
+            }
+        );
+    }
+  
+    console.log(todosProcesos);
+});
+
+ // ! ABRIR Y CERRAR BUSCADOR
+
+const btnAbrirBuscador = document.querySelector(".blockBuscador__button");
+const blockBuscadorContenedor = document.querySelector(".blockBuscador__contenedor");
+
+btnAbrirBuscador.addEventListener("click", ()=>{
+    blockBuscadorContenedor.style.display = "flex";
+    setTimeout(()=>{
+        blockBuscadorContenedor.classList.add("blockBuscador__contenedor--animacion");
+    }, 100)
+})
+
+blockBuscadorContenedor.addEventListener('mousedown', function(event) {
+    const blockBuscadorContenido = document.querySelector('.blockBuscador__contenido');
+
+    if (!blockBuscadorContenido.contains(event.target)) {
+        blockBuscadorProc.classList.remove("blockBuscador__proc--animacion")
+        setTimeout(()=>{
+            blockBuscadorContenedor.classList.remove("blockBuscador__contenedor--animacion");
+        }, 400) // duracion de la animacion anterior + 0.1s de espera
+        setTimeout(()=>{
+            blockBuscadorContenedor.style.display = "none";
+        }, 1000) // 0.4s + 0.1s de espera + 0.5s animacion del anterior animacion
+    }
+});
+
+
+// ! ANIMACION 
+
+const blockBuscadorInput = document.querySelector(".blockBuscador__input");
+const blockBuscadorProc = document.querySelector(".blockBuscador__proc");
+const blockBuscadorList = document.querySelector(".blockBuscador__list");
+const blockBuscadorI = document.querySelector(".blockBuscador__group .blockBuscador__i");
+
+blockBuscadorInput.addEventListener("focus", ()=>{
+    blockBuscadorProc.classList.add("blockBuscador__proc--animacion")
+    blockBuscadorI.classList.add("blockBuscador__i--animacion")
+})
+
+blockBuscadorInput.addEventListener("blur", ()=>{
+    blockBuscadorI.classList.remove("blockBuscador__i--animacion")
+})
+
+
+// ! LLENAR LA LISTA DEL BUSCADOR CON LOS PROCESOS
+
+document.addEventListener('DOMContentLoaded', function() {
+
+for (let i=0; i < todosProcesos.length; i++) {
+    let proceso = document.createElement("div");
+    let rpa = "";
+    let ia = "";
+
+    if (todosProcesos[i].area.toLowerCase() == "operación") {
+        proceso.classList.add("blockProcesos__proceso--core");
+    }
+
+    proceso.classList.add("blockProcesos__proceso");
+    proceso.addEventListener("click", ()=>{
+
+        // * Mostar visualmente que se selecciono
+        proceso.classList.toggle("blockProcesos__proceso--seleccionado");
+
+        // * Cambiar el estado del arreglo
+        if (todosProcesos[i].seleccionado) {
+            todosProcesos[i].seleccionado = false;
+        } else {
+            todosProcesos[i].seleccionado = true;
+        }
+
+        // * Actualizar diseño
+        actualizarProcesos(i);
+    })
+
+    if (todosProcesos[i].rpa) {
+        rpa = `
+            <div class="blockProcesos__collapse__etiqueta blockProcesos__collapse__etiqueta--rpa">
+                <i class="fa-solid fa-robot e1"></i>
+                <span class="e1">RPA</span>
+            </div>
+        `;
+    }
+
+    if (todosProcesos[i].ia) {
+        ia = `
+            <div class="blockProcesos__collapse__etiqueta blockProcesos__collapse__etiqueta--ia">
+                <i class="fa-solid fa-brain e2"></i>
+                <span class="e2">IA</span>
+            </div>
+        `;
+    }
+
+    proceso.innerHTML = `
+        <div class="blockProcesos__collapse__icono">
+            <div class="blockProcesos__collapse__circulo"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="blockProcesos__collapse__p">
+            <strong>
+                ${primeraLetraMayuscula(todosProcesos[i].area)}
+            </strong>
+            <p>
+                ${todosProcesos[i].nombre}
+            </p>
+        </div>
+        <div class="blockProcesos__collapse__etiquetas">
+            ${rpa}
+            ${ia}
+        </div>
+    `;
+
+    blockBuscadorList.appendChild(proceso);
+
+}
+
+})
+
+function primeraLetraMayuscula(cadena) {
+    // Verificar si la cadena no está vacía
+    if (cadena.length === 0) {
+        return cadena; // Devolver la cadena original si está vacía
+    }
+
+    // Obtener la primera letra y convertirla a mayúscula
+    var primeraLetraMayuscula = cadena.charAt(0).toUpperCase();
+
+    // Concatenar la primera letra mayúscula con el resto de la cadena
+    var restoCadena = cadena.slice(1);
+
+    // Devolver la cadena con la primera letra en mayúscula y el resto sin cambios
+    return primeraLetraMayuscula + restoCadena;
+}
+
+// ! ACTUALIZAR EL DISEÑO DE ESCOGE TUS PROCESOS Y DEL BUSCADOR
+
+function actualizarProcesos(posicicion) {
+
+    if (todosProcesos[posicicion].seleccionado) {
+        
+        // * Actualizar en el general
+        procesos[posicicion].classList.add("blockProcesos__proceso--seleccionado");
+
+        // * Actualizar en el buscador
+        blockBuscadorList.children[posicicion].classList.add("blockProcesos__proceso--seleccionado");
+
+
+    } else {
+
+        // * Actualizar en el general
+        procesos[posicicion].classList.remove("blockProcesos__proceso--seleccionado");
+
+        // * Actualizar en el buscador
+        blockBuscadorList.children[posicicion].classList.remove("blockProcesos__proceso--seleccionado");
+
+    }
+}
+
+// ! FILTRAR MIENTRAS SE ESCRIBE EN EL BUSCADOR
+
+blockBuscadorInput.addEventListener("keyup",(e)=>{
+    let texto = blockBuscadorInput.value.toLowerCase();
+    let encontrado = false;
+    let blockUltimo = document.querySelector(".blockBuscador__proc .blockProcesos__contenedor");
+
+    // * Buscar
+
+    for (let i=0; i<blockBuscadorList.children.length; i++) {
+
+        let parrafo = blockBuscadorList.children[i].querySelector(".blockProcesos__collapse__p p")
+
+        if (parrafo !== null) {
+
+            parrafo = parrafo.innerHTML.toLowerCase();
+
+            if (parrafo.includes(texto)) {
+                blockBuscadorList.children[i].style.display = "grid";
+                setTimeout(()=>{
+                    blockBuscadorList.children[i].classList.remove("blockProcesos__proceso--eliminar");
+                }, 100)
+                encontrado = true;
+            } else {
+                blockBuscadorList.children[i].classList.add("blockProcesos__proceso--eliminar");
+                setTimeout(()=>{
+                    blockBuscadorList.children[i].style.display = "none";
+                }, 400)
+            }
+        }
+    }
+
+    // * Mostrar mensaje que no se encontro la busqueda
+
+    if (encontrado) {
+
+        blockUltimo.classList.add("blockProcesos__contenedor--eliminar");
+        setTimeout(()=>{
+            blockUltimo.style.display = "none";
+        }, 400)
+
+    } else {
+
+        blockUltimo.style.display = "grid";
+        setTimeout(()=>{
+            blockUltimo.classList.remove("blockProcesos__contenedor--eliminar");
+        }, 100)
+    }
+
+})
