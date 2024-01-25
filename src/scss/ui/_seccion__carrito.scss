@@ -1,0 +1,28 @@
+@use 'utils/mixins' as m;
+@use 'utils/variables' as v;
+@use '../custom' as *;
+
+.procesosSeleccionados {
+    & .block__principal {
+        display: flex;
+    }
+
+    & .imagenDigni{
+        height: 20rem;
+
+        @include m.bgDigni('../../build/img/1.webp', 15rem);
+      
+        @include m.laptop { 
+            width: 50%;
+            height: 40rem;
+            @include m.bgDigni('../../build/img/6.webp', 28rem);
+            transform: rotateY(180deg)
+        }
+      
+        @include m.desktop { 
+            width: unset;
+            height: 32rem;
+            @include m.bgDigni('../../build/img/3.webp', 15rem);
+        }
+    }
+}

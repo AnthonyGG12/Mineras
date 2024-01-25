@@ -12714,7 +12714,7 @@ p {
 }
 @media (min-width: 1440px) {
   .area .block__contenido {
-    flex-direction: unset;
+    flex-direction: row-reverse;
   }
 }
 .area::-webkit-scrollbar {
@@ -13261,6 +13261,38 @@ p {
     transform: rotate(360deg);
   }
 }
+.procesosSeleccionados .block__principal {
+  display: flex;
+}
+.procesosSeleccionados .imagenDigni {
+  height: 20rem;
+  background-image: url("../../build/img/1.webp");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 15rem;
+}
+@media (min-width: 1024px) {
+  .procesosSeleccionados .imagenDigni {
+    width: 50%;
+    height: 40rem;
+    background-image: url("../../build/img/6.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 28rem;
+    transform: rotateY(180deg);
+  }
+}
+@media (min-width: 1440px) {
+  .procesosSeleccionados .imagenDigni {
+    width: unset;
+    height: 32rem;
+    background-image: url("../../build/img/3.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 15rem;
+  }
+}
+
 .criterios .imagenDigni {
   height: 20rem;
   background-image: url("../../build/img/1.webp");
