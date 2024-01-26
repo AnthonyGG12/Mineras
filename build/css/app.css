@@ -13292,6 +13292,115 @@ p {
     background-size: 15rem;
   }
 }
+.procesosSeleccionados .blockProcesos__collapse__etiquetas {
+  grid-column: 2/3;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  .procesosSeleccionados .blockProcesos__collapse__etiquetas {
+    gap: 1.3rem;
+  }
+}
+.procesosSeleccionados .blockProcesos__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+  overflow-y: auto;
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:nth-child(-n+5) {
+  border: 0.3rem solid #FC4D19;
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:nth-child(-n+5):hover .procesosSeleccionados__control {
+  background-color: rgba(252, 77, 25, 0.4);
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:nth-child(-n+5) .circulo--eliminar:hover {
+  background-color: #13161C;
+}
+.procesosSeleccionados .blockProcesos__items:only-child .blockProcesos__item:only-child .procesosSeleccionados__opciones {
+  justify-content: center;
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:first-child .procesosSeleccionados__opciones {
+  height: 11.4rem;
+  justify-content: flex-end;
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:first-child .circulo--arriba {
+  display: none;
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:last-child .procesosSeleccionados__opciones {
+  height: 11.4rem;
+  justify-content: flex-start;
+}
+.procesosSeleccionados .blockProcesos__items .blockProcesos__item:last-child .circulo--abajo {
+  display: none;
+}
+.procesosSeleccionados .blockProcesos__item {
+  border: 0.3rem solid #242B35;
+  border-radius: 2rem;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  transition: 0.5s;
+  transition-timing-function: ease-in-out;
+}
+.procesosSeleccionados .blockProcesos__item:hover .procesosSeleccionados__control {
+  transform: translateX(0%);
+}
+.procesosSeleccionados .blockProcesos__item--moverArriba {
+  transform: translateY(calc(-100% - 2rem));
+}
+.procesosSeleccionados .blockProcesos__item--moverAbajo {
+  transform: translateY(calc(100% + 2rem));
+}
+.procesosSeleccionados .blockProcesos__proceso {
+  min-height: 14rem;
+  grid-template-columns: 1fr auto;
+}
+.procesosSeleccionados .blockProcesos__proceso:hover {
+  background: transparent;
+}
+.procesosSeleccionados__control {
+  background-color: rgba(48, 56, 67, 0.5);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  right: 0;
+  height: 100%;
+  border-radius: 0 1.6rem 1.6rem 0;
+  padding: 0 0.5rem;
+  transition: 0.3s;
+  transform: translateX(100%);
+}
+.procesosSeleccionados__opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.procesosSeleccionados .circulo {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.procesosSeleccionados .circulo:hover {
+  background-color: #fff;
+  color: #13161C;
+}
+.procesosSeleccionados .circulo--eliminar:hover {
+  background-color: #E8432E;
+  color: #fff;
+}
+.procesosSeleccionados .blockProcesos__collapse__p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
 
 .criterios .imagenDigni {
   height: 20rem;
@@ -13314,7 +13423,7 @@ p {
 @media (min-width: 1440px) {
   .criterios .imagenDigni {
     width: unset;
-    height: 50rem;
+    height: 32rem;
     background-image: url("../../build/img/1.webp");
     background-position: top center;
     background-repeat: no-repeat;

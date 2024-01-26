@@ -25,4 +25,153 @@
             @include m.bgDigni('../../build/img/3.webp', 15rem);
         }
     }
+
+    & .blockProcesos__collapse__etiquetas {
+        grid-column: 2/3;
+        flex-direction: column;
+
+        @include m.tablet() {
+            gap: 1.3rem;
+        }
+    }
+
+
+    & .blockProcesos__items {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        height: 100%;
+        overflow-y: auto;
+
+        & .blockProcesos__item:nth-child(-n+5) { // SOLO A LOS 5 PRIMEROS
+            border: 0.3rem solid $primary;
+
+            &:hover .procesosSeleccionados__control {
+                background-color: rgba($color: $primary, $alpha: 0.4);
+            }
+
+            & .circulo--eliminar {
+
+                &:hover {
+                    background-color: v.$bg-primary;
+                }
+            }
+        }
+
+        &:only-child { // SOLO SI TIENE UN HIJO
+
+            & .blockProcesos__item:only-child .procesosSeleccionados__opciones {
+                justify-content: center;
+            }
+        }
+
+        & .blockProcesos__item:first-child { // SOLO AL PRIMERO
+
+            & .procesosSeleccionados__opciones {
+                height: 11.4rem;
+                justify-content: flex-end;
+            }
+
+            & .circulo--arriba {
+                display: none;
+            }
+        }
+
+        & .blockProcesos__item:last-child { // SOLO AL ULTIMO
+
+            & .procesosSeleccionados__opciones {
+                height: 11.4rem;
+                justify-content: flex-start;
+            }
+
+            & .circulo--abajo {
+                display: none;
+            }
+        }
+    }
+
+    & .blockProcesos__item {
+        border: 0.3rem solid v.$gray;
+        border-radius: 2rem;
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+        transition: 0.5s;
+        transition-timing-function: ease-in-out;
+
+        &:hover .procesosSeleccionados__control {
+            transform: translateX(0%);
+        }
+
+        // ! ANIMACION AL MOVER DE POSICION
+
+        &--moverArriba {
+            transform: translateY(calc(-100% - 2rem));
+        }
+
+        &--moverAbajo {
+            transform: translateY(calc(100% + 2rem));
+        }
+
+    }
+
+    & .blockProcesos__proceso {
+        min-height: 14rem;
+        grid-template-columns: 1fr auto;
+
+        &:hover {
+            background: transparent;
+        }
+    }
+
+    &__control {
+        background-color: rgba($color: #303843, $alpha: 0.5);
+        position: absolute;
+        display: flex;
+        align-items: center;
+        top: 0;
+        right: 0;
+        height: 100%;
+        border-radius: 0 1.6rem 1.6rem 0;
+        padding: 0 0.5rem;
+        transition: 0.3s;
+        transform: translateX(100%);
+    }
+
+    &__opciones {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    & .circulo {
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: v.$white;
+            color: v.$bg-primary;
+        }
+
+        &--eliminar {
+
+            &:hover {
+                background-color: v.$red;
+                color: v.$white;
+            }
+        }
+    }
+
+    & .blockProcesos__collapse__p {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+    }
 }

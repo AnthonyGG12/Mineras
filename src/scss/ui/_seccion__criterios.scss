@@ -20,7 +20,7 @@
       
         @include m.desktop { 
             width: unset;
-            height: 50rem;
+            height: 32rem;
             @include m.bgDigni('../../build/img/1.webp', 28rem);
         }
       }

@@ -231,7 +231,7 @@ mostrarProcesos()
 
 // Seleccionar procesos
 
-const procesos = document.querySelectorAll(".blockProcesos__proceso");
+const procesos = document.querySelectorAll(".procesos .blockProcesos__proceso");
 
 for (let i=0; i<procesos.length; i++) {
     procesos[i].addEventListener("click", ()=>{
@@ -259,7 +259,7 @@ function seleccionarProceso(elemento, posicicion) {
 const todosProcesos = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-    const blockProcesosCollapseP = document.querySelectorAll(".blockProcesos__items .blockProcesos__collapse__p");
+    const blockProcesosCollapseP = document.querySelectorAll(".procesos .blockProcesos__items .blockProcesos__collapse__p");
   
     for (let i=0; i<blockProcesosCollapseP.length; i++) {
 
@@ -439,6 +439,9 @@ function actualizarProcesos(posicicion) {
         // * Actualizar en el buscador
         blockBuscadorList.children[posicicion].classList.add("blockProcesos__proceso--seleccionado");
 
+        // * Actualizar en el carrito
+        añadirProcesoAlCarrito(posicicion);
+
 
     } else {
 
@@ -447,6 +450,9 @@ function actualizarProcesos(posicicion) {
 
         // * Actualizar en el buscador
         blockBuscadorList.children[posicicion].classList.remove("blockProcesos__proceso--seleccionado");
+        
+        // * Actualizar en el carrito
+        eliminarProcesoDelCarrito(posicicion);
 
     }
 }
@@ -501,3 +507,97 @@ blockBuscadorInput.addEventListener("keyup",(e)=>{
     }
 
 })
+
+
+// ! SECCION CARRITO DE PROCESOS
+
+// ! ANIMACION DE LAS OPCIONES DE LOS PROCESOS SELECCIONADOS
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'w') {
+        let ele = document.querySelector(".procesosSeleccionados .blockProcesos__item:last-child");
+        let ele2 = document.querySelector(".procesosSeleccionados .blockProcesos__item:nth-last-child(2)");
+
+        ele.classList.toggle("blockProcesos__item--moverArriba");
+        ele2.classList.toggle("blockProcesos__item--moverAbajo");
+    }
+})
+
+
+// ! AÑADIR AL CARRITO LOS PROCESOS SELECCIONADOS
+
+const carrito = document.querySelector(".procesosSeleccionados .blockProcesos__items");
+
+function añadirProcesoAlCarrito(id) {
+    let rpa = "";
+    let ia = "";
+
+    if (todosProcesos[id].rpa) {
+        rpa = `
+            <div class="blockProcesos__collapse__etiqueta blockProcesos__collapse__etiqueta--rpa">
+                <i class="fa-solid fa-robot e1"></i>
+                <span class="e1">RPA</span>
+            </div>
+        `;
+    }
+
+    if (todosProcesos[id].ia) {
+        ia = `
+            <div class="blockProcesos__collapse__etiqueta blockProcesos__collapse__etiqueta--ia">
+                <i class="fa-solid fa-brain e2"></i>
+                <span class="e2">IA</span>
+            </div>
+        `;
+    }
+
+    let proceso = `
+        <div class="blockProcesos__item" data-id="${id}">
+            <div class="blockProcesos__proceso">
+                <div class="blockProcesos__collapse__p">
+                    <strong>
+                        ${primeraLetraMayuscula(todosProcesos[id].area)}
+                    </strong>
+                    <p>
+                        ${todosProcesos[id].nombre}
+                    </p>
+                </div>
+                <div class="blockProcesos__collapse__etiquetas">
+                    ${rpa}
+                    ${ia}
+                </div>
+            </div>
+
+            <div class="procesosSeleccionados__control">
+                <div class="procesosSeleccionados__opciones">
+                    <div class="circulo circulo--arriba">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </div>
+                    <div class="circulo circulo--eliminar">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="circulo circulo--abajo">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    carrito.innerHTML += proceso;
+}
+
+
+// ! ELIMINAR DEL CARRITO LOS PROCESOS DESELECCIONADOS
+
+function eliminarProcesoDelCarrito(id) {
+
+    let procesoEliminar;
+
+    for(let i=0; i<carrito.children.length; i++) {
+        if (carrito.children[i].getAttribute("data-id") == id) {
+            procesoEliminar = carrito.children[i];
+        }
+    }
+
+    carrito.removeChild(procesoEliminar);
+}
