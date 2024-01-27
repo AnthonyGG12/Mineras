@@ -309,9 +309,10 @@ btnAbrirBuscador.addEventListener("click", ()=>{
 
 blockBuscadorContenedor.addEventListener('mousedown', function(event) {
     const blockBuscadorContenido = document.querySelector('.blockBuscador__contenido');
-
+    console.log(blockBuscadorContenido.contains(event.target))
     if (!blockBuscadorContenido.contains(event.target)) {
         blockBuscadorProc.classList.remove("blockBuscador__proc--animacion")
+        console.log("dd")
         setTimeout(()=>{
             blockBuscadorContenedor.classList.remove("blockBuscador__contenedor--animacion");
         }, 100) // duracion de la animacion anterior + 0.1s de espera
@@ -320,6 +321,7 @@ blockBuscadorContenedor.addEventListener('mousedown', function(event) {
         }, 500) // 0.4s + 0.1s de espera + 0.5s animacion del anterior animacion
     }
 });
+
 
 
 // ! ANIMACION 
@@ -455,6 +457,10 @@ function actualizarProcesos(posicicion) {
         eliminarProcesoDelCarrito(posicicion);
 
     }
+
+    // * Verificar elementos del carrito y mostrar mensaje
+
+    verificarCarrito()
 }
 
 // ! FILTRAR MIENTRAS SE ESCRIBE EN EL BUSCADOR
@@ -531,6 +537,7 @@ const carrito = document.querySelector(".procesosSeleccionados .blockProcesos__i
 function añadirProcesoAlCarrito(id) {
     let rpa = "";
     let ia = "";
+    let clase = "";
 
     if (todosProcesos[id].rpa) {
         rpa = `
@@ -550,11 +557,19 @@ function añadirProcesoAlCarrito(id) {
         `;
     }
 
+    //
+
+    if (todosProcesos[id].area == "operación") {
+        clase = "procesosSeleccionados__strong--core";
+    }
+
+    //
+
     let proceso = `
         <div class="blockProcesos__item" data-id="${id}">
             <div class="blockProcesos__proceso">
                 <div class="blockProcesos__collapse__p">
-                    <strong>
+                    <strong class="${clase}">
                         ${primeraLetraMayuscula(todosProcesos[id].area)}
                     </strong>
                     <p>
@@ -569,13 +584,13 @@ function añadirProcesoAlCarrito(id) {
 
             <div class="procesosSeleccionados__control">
                 <div class="procesosSeleccionados__opciones">
-                    <div class="circulo circulo--arriba">
+                    <div class="circulo circulo--arriba" onclick="moverArriba(this)">
                         <i class="fa-solid fa-angle-up"></i>
                     </div>
-                    <div class="circulo circulo--eliminar">
+                    <div class="circulo circulo--eliminar" onclick="eliminarProcesoDelCarrito2(this, ${id})">
                         <i class="fa-solid fa-xmark"></i>
                     </div>
-                    <div class="circulo circulo--abajo">
+                    <div class="circulo circulo--abajo" onclick="moverAbajo(this)">
                         <i class="fa-solid fa-angle-down"></i>
                     </div>
                 </div>
@@ -587,7 +602,7 @@ function añadirProcesoAlCarrito(id) {
 }
 
 
-// ! ELIMINAR DEL CARRITO LOS PROCESOS DESELECCIONADOS
+// ! ELIMINAR DEL CARRITO LOS PROCESOS DESELECCIONADOS - DEL GENERAL Y BUSCADOR
 
 function eliminarProcesoDelCarrito(id) {
 
@@ -600,4 +615,121 @@ function eliminarProcesoDelCarrito(id) {
     }
 
     carrito.removeChild(procesoEliminar);
+}
+
+// ! ELIMINAR DEL CARRITO LOS PROCESOS DESELECCIONADOS - DEL CARRITO
+
+function eliminarProcesoDelCarrito2(elemento, id) {
+
+    // * Actualizar el arreglo
+
+    todosProcesos[id].seleccionado = false;
+
+    // * Eliminar del carrito
+    
+    elemento = elemento.parentNode.parentNode.parentNode;
+
+    elemento.children[0].style.height = `${elemento.scrollHeight}px`;
+
+    setTimeout(()=>{
+        elemento.classList.add("blockProcesos__item--animacion");
+    }, 100)
+
+    setTimeout(()=>{
+        carrito.removeChild(elemento);
+    }, 600) // igual al que abajo
+    
+
+    // * Eliminar del buscador
+
+    blockBuscadorList.children[id].classList.remove("blockProcesos__proceso--seleccionado");
+
+    // * Eliminar del general
+
+    procesos[id].classList.remove("blockProcesos__proceso--seleccionado");
+
+    // * Verificar elementos y mostrar mensaje
+
+    setTimeout(()=>{
+        verificarCarrito()
+    }, 600) // igual al que arriba
+
+}
+
+// ! MOSTRAR MENSAJE QUE NO HAY ELEMENTOS EN EL CARRITO
+
+const mensajeCarritoVacio = document.querySelector(".procesosSeleccionados .blockProcesos__contenedor--eliminar");
+
+function verificarCarrito() {
+    if (carrito.children.length > 0) {
+        mensajeCarritoVacio.style.opacity = "0";
+        setTimeout(()=>{
+            mensajeCarritoVacio.style.display = "none";
+        }, 500)
+    } else {
+        mensajeCarritoVacio.style.display = "flex";
+        setTimeout(()=>{
+            mensajeCarritoVacio.style.opacity = "1";
+        }, 100)
+    }
+}
+
+// ! ANIMACIONES DE MOVER DE POSICION
+
+function moverAbajo(elemento) {
+
+    elemento = elemento.parentNode.parentNode.parentNode;
+
+    for (let i=0; i<carrito.children.length; i++) {
+        if (carrito.children[i] == elemento) {
+            let elementoActual = carrito.children[i]
+            let elementoSiguiente = carrito.children[i+1];
+
+            elementoActual.classList.add("blockProcesos__item--moverAbajo");
+            elementoActual.style.transition = "0.5s";
+            elementoSiguiente.classList.add("blockProcesos__item--moverArriba");
+            elementoSiguiente.style.transition = "0.5s";
+
+            setTimeout(()=>{
+                elementoActual.classList.remove("blockProcesos__item--moverAbajo");
+                elementoActual.style.transition = "0s";
+                elementoSiguiente.classList.remove("blockProcesos__item--moverArriba");
+                elementoSiguiente.style.transition = "0s";
+
+                carrito.insertBefore(elementoSiguiente, elementoActual);
+        
+            }, 500)
+
+            break;
+        }
+    }
+}
+
+function moverArriba(elemento) {
+
+    elemento = elemento.parentNode.parentNode.parentNode;
+
+    for (let i=0; i<carrito.children.length; i++) {
+        if (carrito.children[i] == elemento) {
+            let elementoActual = carrito.children[i]
+            let elementoAnterior = carrito.children[i-1];
+
+            elementoActual.classList.add("blockProcesos__item--moverArriba");
+            elementoActual.style.transition = "0.5s";
+            elementoAnterior.classList.add("blockProcesos__item--moverAbajo");
+            elementoAnterior.style.transition = "0.5s";
+
+            setTimeout(()=>{
+                elementoActual.classList.remove("blockProcesos__item--moverArriba");
+                elementoActual.style.transition = "0s";
+                elementoAnterior.classList.remove("blockProcesos__item--moverAbajo");
+                elementoAnterior.style.transition = "0s";
+
+                carrito.insertBefore(elementoActual, elementoAnterior);
+        
+            }, 500)
+
+            break;
+        }
+    }
 }

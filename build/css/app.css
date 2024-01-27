@@ -13301,12 +13301,18 @@ p {
     gap: 1.3rem;
   }
 }
-.procesosSeleccionados .blockProcesos__items {
+.procesosSeleccionados__carrito {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   height: 100%;
+  width: 100%;
   overflow-y: auto;
+}
+.procesosSeleccionados .blockProcesos__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 .procesosSeleccionados .blockProcesos__items .blockProcesos__item:nth-child(-n+5) {
   border: 0.3rem solid #FC4D19;
@@ -13346,6 +13352,15 @@ p {
 .procesosSeleccionados .blockProcesos__item:hover .procesosSeleccionados__control {
   transform: translateX(0%);
 }
+.procesosSeleccionados .blockProcesos__item--animacion {
+  opacity: 0;
+  border: none;
+}
+.procesosSeleccionados .blockProcesos__item--animacion .blockProcesos__proceso {
+  height: 0rem !important;
+  min-height: 0rem;
+  padding: 0;
+}
 .procesosSeleccionados .blockProcesos__item--moverArriba {
   transform: translateY(calc(-100% - 2rem));
 }
@@ -13355,6 +13370,8 @@ p {
 .procesosSeleccionados .blockProcesos__proceso {
   min-height: 14rem;
   grid-template-columns: 1fr auto;
+  opacity: 1;
+  transition: 0.5s;
 }
 .procesosSeleccionados .blockProcesos__proceso:hover {
   background: transparent;
@@ -13400,6 +13417,14 @@ p {
   flex-direction: column;
   justify-content: center;
   gap: 0.5rem;
+}
+.procesosSeleccionados .blockProcesos__contenedor--eliminar {
+  opacity: 1;
+  transition: 0.3s;
+  cursor: default;
+}
+.procesosSeleccionados__strong--core {
+  color: #399BE2;
 }
 
 .criterios .imagenDigni {
