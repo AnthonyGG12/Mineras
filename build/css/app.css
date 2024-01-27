@@ -13293,12 +13293,13 @@ p {
   }
 }
 .procesosSeleccionados .blockProcesos__collapse__etiquetas {
-  grid-column: 2/3;
-  flex-direction: column;
+  flex-direction: row;
 }
 @media (min-width: 768px) {
   .procesosSeleccionados .blockProcesos__collapse__etiquetas {
     gap: 1.3rem;
+    grid-column: 2/3;
+    flex-direction: column;
   }
 }
 .procesosSeleccionados__carrito {
@@ -13327,15 +13328,27 @@ p {
   justify-content: center;
 }
 .procesosSeleccionados .blockProcesos__items .blockProcesos__item:first-child .procesosSeleccionados__opciones {
-  height: 11.4rem;
+  width: 11.4rem;
   justify-content: flex-end;
+}
+@media (min-width: 768px) {
+  .procesosSeleccionados .blockProcesos__items .blockProcesos__item:first-child .procesosSeleccionados__opciones {
+    height: 11.4rem;
+    width: unset;
+  }
 }
 .procesosSeleccionados .blockProcesos__items .blockProcesos__item:first-child .circulo--arriba {
   display: none;
 }
 .procesosSeleccionados .blockProcesos__items .blockProcesos__item:last-child .procesosSeleccionados__opciones {
-  height: 11.4rem;
   justify-content: flex-start;
+  width: 11.4rem;
+}
+@media (min-width: 768px) {
+  .procesosSeleccionados .blockProcesos__items .blockProcesos__item:last-child .procesosSeleccionados__opciones {
+    height: 11.4rem;
+    width: unset;
+  }
 }
 .procesosSeleccionados .blockProcesos__items .blockProcesos__item:last-child .circulo--abajo {
   display: none;
@@ -13369,30 +13382,58 @@ p {
 }
 .procesosSeleccionados .blockProcesos__proceso {
   min-height: 14rem;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
   opacity: 1;
   transition: 0.5s;
+  text-align: center;
+  gap: 1rem;
 }
 .procesosSeleccionados .blockProcesos__proceso:hover {
   background: transparent;
+}
+@media (min-width: 768px) {
+  .procesosSeleccionados .blockProcesos__proceso {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto;
+    text-align: start;
+  }
 }
 .procesosSeleccionados__control {
   background-color: rgba(48, 56, 67, 0.5);
   position: absolute;
   display: flex;
+  justify-content: center;
   align-items: center;
-  top: 0;
-  right: 0;
-  height: 100%;
-  border-radius: 0 1.6rem 1.6rem 0;
-  padding: 0 0.5rem;
   transition: 0.3s;
-  transform: translateX(100%);
+  transform: translateY(100%);
+  padding: 0.5rem 0;
+  border-radius: 0 0 1.6rem 1.6rem;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .procesosSeleccionados__control {
+    padding: 0 0.5rem;
+    border-radius: 0 1.6rem 1.6rem 0;
+    top: 0;
+    right: 0;
+    left: unset;
+    height: 100%;
+    width: unset;
+    transform: translateX(100%);
+  }
 }
 .procesosSeleccionados__opciones {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1.2rem;
+}
+@media (min-width: 768px) {
+  .procesosSeleccionados__opciones {
+    flex-direction: column;
+  }
 }
 .procesosSeleccionados .circulo {
   width: 3rem;

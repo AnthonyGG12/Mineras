@@ -27,11 +27,12 @@
     }
 
     & .blockProcesos__collapse__etiquetas {
-        grid-column: 2/3;
-        flex-direction: column;
+        flex-direction: row;
 
         @include m.tablet() {
             gap: 1.3rem;
+            grid-column: 2/3;
+            flex-direction: column;
         }
     }
 
@@ -77,8 +78,13 @@
         & .blockProcesos__item:first-child { // SOLO AL PRIMERO
 
             & .procesosSeleccionados__opciones {
-                height: 11.4rem;
+                width: 11.4rem;
                 justify-content: flex-end;
+
+                @include m.tablet() {
+                    height: 11.4rem;
+                    width: unset;
+                }
             }
 
             & .circulo--arriba {
@@ -89,8 +95,13 @@
         & .blockProcesos__item:last-child { // SOLO AL ULTIMO
 
             & .procesosSeleccionados__opciones {
-                height: 11.4rem;
                 justify-content: flex-start;
+                width: 11.4rem;
+
+                @include m.tablet() {
+                    height: 11.4rem;
+                    width: unset;
+                }
             }
 
             & .circulo--abajo {
@@ -139,12 +150,21 @@
 
     & .blockProcesos__proceso {
         min-height: 14rem;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
         opacity: 1;
         transition: 0.5s;
+        text-align: center;
+        gap: 1rem;
 
         &:hover {
             background: transparent;
+        }
+
+        @include m.tablet() {
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto;
+            text-align: start;
         }
 
     }
@@ -153,20 +173,37 @@
         background-color: rgba($color: #303843, $alpha: 0.5);
         position: absolute;
         display: flex;
+        justify-content: center;
         align-items: center;
-        top: 0;
-        right: 0;
-        height: 100%;
-        border-radius: 0 1.6rem 1.6rem 0;
-        padding: 0 0.5rem;
         transition: 0.3s;
-        transform: translateX(100%);
+        transform: translateY(100%);
+        padding: 0.5rem 0;
+        border-radius: 0 0 1.6rem 1.6rem;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        @include m.tablet() {
+            padding: 0 0.5rem;
+            border-radius: 0 1.6rem 1.6rem 0;
+            top: 0;
+            right: 0;
+            left: unset;
+            
+            height: 100%;
+            width: unset;
+            transform: translateX(100%);
+        }
     }
 
     &__opciones {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 1.2rem;
+
+        @include m.tablet() {
+            flex-direction: column;
+        }
     }
 
     & .circulo {
