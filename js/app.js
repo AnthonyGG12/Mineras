@@ -257,6 +257,7 @@ function seleccionarProceso(elemento, posicicion) {
 // ! OBTENER INFORMACION DE TODOS LOS PROCESOS 
 
 const todosProcesos = [];
+let iterador;
 
 document.addEventListener('DOMContentLoaded', function() {
     const blockProcesosCollapseP = document.querySelectorAll(".procesos .blockProcesos__items .blockProcesos__collapse__p");
@@ -293,6 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   
     console.log(todosProcesos);
+    iterador = todosProcesos.length;
 });
 
  // ! ABRIR Y CERRAR BUSCADOR
@@ -309,10 +311,8 @@ btnAbrirBuscador.addEventListener("click", ()=>{
 
 blockBuscadorContenedor.addEventListener('mousedown', function(event) {
     const blockBuscadorContenido = document.querySelector('.blockBuscador__contenido');
-    console.log(blockBuscadorContenido.contains(event.target))
     if (!blockBuscadorContenido.contains(event.target)) {
         blockBuscadorProc.classList.remove("blockBuscador__proc--animacion")
-        console.log("dd")
         setTimeout(()=>{
             blockBuscadorContenedor.classList.remove("blockBuscador__contenedor--animacion");
         }, 100) // duracion de la animacion anterior + 0.1s de espera
@@ -465,10 +465,11 @@ function actualizarProcesos(posicicion) {
 
 // ! FILTRAR MIENTRAS SE ESCRIBE EN EL BUSCADOR
 
+const blockUltimo = document.querySelector(".procesos .blockProcesos__contenedor--eliminar");
+
 blockBuscadorInput.addEventListener("keyup",(e)=>{
     let texto = blockBuscadorInput.value.toLowerCase();
     let encontrado = false;
-    let blockUltimo = document.querySelector(".blockBuscador__proc .blockProcesos__contenedor");
 
     // * Buscar
 
@@ -504,13 +505,77 @@ blockBuscadorInput.addEventListener("keyup",(e)=>{
             blockUltimo.style.display = "none";
         }, 400)
 
+        blockBuscadorProc.style.height = ``;
+
+
     } else {
 
-        blockUltimo.style.display = "grid";
+        blockUltimo.style.display = "flex";
         setTimeout(()=>{
             blockUltimo.classList.remove("blockProcesos__contenedor--eliminar");
         }, 100)
+
+        btnBotonNuevo.classList.remove("procesos__botonNuevo--creado");
+
+        blockBuscadorProc.style.height = `${blockBuscadorProc.children[1].scrollHeight + 30}px`;
+
     }
+    
+
+})
+
+// ! AÑADIR EL PROCESO QUE FUE CREADO EN EL BUSCADOR Y COLOCARLO EN EL CARRITO
+
+const btnBotonNuevo = document.querySelector(".procesos .procesos__botonNuevo");
+
+btnBotonNuevo.addEventListener("click", ()=>{
+
+    btnBotonNuevo.classList.add("procesos__botonNuevo--creado");
+
+    let texto = primeraLetraMayuscula(blockBuscadorInput.value.toLowerCase());
+
+    carrito.innerHTML += `
+        <div class="blockProcesos__item" data-id="${iterador}">
+            <div class="blockProcesos__proceso">
+                <div class="blockProcesos__collapse__p">
+                    <strong class="procesosSeleccionados__strong--nuevo">
+                        Nuevo
+                    </strong>
+                    <p>
+                        ${texto}
+                    </p>
+                </div>
+                <div class="blockProcesos__collapse__etiquetas">
+                    <div class="blockProcesos__collapse__etiqueta blockProcesos__collapse__etiqueta--rpa">
+                        <i class="fa-solid fa-robot e1"></i>
+                        <span class="e1">RPA</span>
+                    </div>
+                    <div class="blockProcesos__collapse__etiqueta blockProcesos__collapse__etiqueta--ia">
+                        <i class="fa-solid fa-brain e2"></i>
+                        <span class="e2">IA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="procesosSeleccionados__control">
+                <div class="procesosSeleccionados__opciones">
+                    <div class="circulo circulo--arriba" onclick="moverArriba(this)">
+                        <i class="fa-solid fa-angle-up"></i>
+                    </div>
+                    <div class="circulo circulo--eliminar" onclick="eliminarProcesoDelCarrito2(this, ${iterador})">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="circulo circulo--abajo" onclick="moverAbajo(this)">
+                        <i class="fa-solid fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    verificarCarrito()
+
+    iterador++;
 
 })
 
@@ -621,15 +686,30 @@ function eliminarProcesoDelCarrito(id) {
 
 function eliminarProcesoDelCarrito2(elemento, id) {
 
-    // * Actualizar el arreglo
 
-    todosProcesos[id].seleccionado = false;
+    // * SI SON PROCESOS DE DIGNITA
+
+    if (id < todosProcesos.length) {
+
+        // * Actualizar el arreglo
+
+        todosProcesos[id].seleccionado = false;
+        
+        // * Eliminar del buscador
+
+        blockBuscadorList.children[id].classList.remove("blockProcesos__proceso--seleccionado");
+
+        // * Eliminar del general
+
+        procesos[id].classList.remove("blockProcesos__proceso--seleccionado");
+    }
+
 
     // * Eliminar del carrito
-    
+        
     elemento = elemento.parentNode.parentNode.parentNode;
 
-    elemento.children[0].style.height = `${elemento.scrollHeight}px`;
+    elemento.children[0].style.height = `${elemento.children[0].scrollHeight}px`;
 
     setTimeout(()=>{
         elemento.classList.add("blockProcesos__item--animacion");
@@ -638,17 +718,9 @@ function eliminarProcesoDelCarrito2(elemento, id) {
     setTimeout(()=>{
         carrito.removeChild(elemento);
     }, 600) // igual al que abajo
-    
 
-    // * Eliminar del buscador
 
-    blockBuscadorList.children[id].classList.remove("blockProcesos__proceso--seleccionado");
-
-    // * Eliminar del general
-
-    procesos[id].classList.remove("blockProcesos__proceso--seleccionado");
-
-    // * Verificar elementos y mostrar mensaje
+    // * Verificar si hay elementos y mostrar mensaje
 
     setTimeout(()=>{
         verificarCarrito()
@@ -733,3 +805,4 @@ function moverArriba(elemento) {
         }
     }
 }
+

@@ -13229,15 +13229,97 @@ p {
 }
 .blockBuscador__proc .blockProcesos__contenedor {
   display: none;
-  padding: 1rem;
-}
-@media (min-width: 768px) {
-  .blockBuscador__proc .blockProcesos__contenedor {
-    padding: 1rem 1.5rem 1rem 2.8rem;
-  }
+  padding: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  cursor: default;
 }
 .blockBuscador__proc .blockProcesos__contenedor--eliminar {
   opacity: 0;
+}
+.blockBuscador__proc .blockProcesos__div {
+  padding: 1rem;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .blockBuscador__proc .blockProcesos__div {
+    padding: 1rem 1.5rem 1rem 2.8rem;
+  }
+}
+.blockBuscador__proc .procesos__nuevo {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .blockBuscador__proc .procesos__nuevo {
+    padding: 1rem 1.5rem 1rem 2.8rem;
+  }
+}
+.blockBuscador__proc .procesos__botonNuevo {
+  border-radius: 2rem;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.blockBuscador__proc .procesos__botonNuevo:hover {
+  background-color: #13161c;
+  box-shadow: 0px 0px 15px #fff;
+  color: #fff;
+}
+.blockBuscador__proc .procesos__botonNuevo__i1 {
+  opacity: 1;
+  transition: 0.3s;
+}
+.blockBuscador__proc .procesos__botonNuevo__span1 {
+  opacity: 1;
+  transition: 0.3s;
+}
+.blockBuscador__proc .procesos__botonNuevo__i2 {
+  transform: translateY(100%);
+  opacity: 0;
+  position: absolute;
+  transition: 0.3s;
+  left: 16%;
+}
+.blockBuscador__proc .procesos__botonNuevo__span2 {
+  transform: translateY(100%);
+  opacity: 0;
+  position: absolute;
+  transition: 0.3s;
+  left: 27%;
+}
+.blockBuscador__proc .procesos__botonNuevo--creado {
+  background-color: #FC4D19;
+  color: #fff;
+  cursor: default;
+}
+.blockBuscador__proc .procesos__botonNuevo--creado .procesos__botonNuevo__i1 {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.blockBuscador__proc .procesos__botonNuevo--creado .procesos__botonNuevo__span1 {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.blockBuscador__proc .procesos__botonNuevo--creado .procesos__botonNuevo__i2 {
+  transform: translateY(0%);
+  opacity: 1;
+}
+.blockBuscador__proc .procesos__botonNuevo--creado .procesos__botonNuevo__span2 {
+  transform: translateY(0%);
+  opacity: 1;
+}
+.blockBuscador__proc .procesos__botonNuevo--creado:hover {
+  background: #FC4D19;
+  box-shadow: unset;
+  color: #fff;
 }
 .blockBuscador__proc::-webkit-scrollbar {
   width: 0.8rem;
@@ -13248,9 +13330,6 @@ p {
   background: #FC4D19;
   border-radius: 0.8rem;
   border-right: 0.2rem solid #13161C;
-}
-.blockBuscador__proc .blockProcesos__contenedor:hover {
-  background-color: #303843;
 }
 
 @keyframes mover {
@@ -13427,7 +13506,7 @@ p {
 }
 .procesosSeleccionados__opciones {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   gap: 1.2rem;
 }
 @media (min-width: 768px) {
@@ -13466,6 +13545,9 @@ p {
 }
 .procesosSeleccionados__strong--core {
   color: #399BE2;
+}
+.procesosSeleccionados__strong--nuevo {
+  color: #FC4D19;
 }
 
 .criterios .imagenDigni {

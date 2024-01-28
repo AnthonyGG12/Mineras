@@ -198,7 +198,7 @@
 
     &__opciones {
         display: flex;
-        flex-direction: row;
+        flex-direction: row-reverse;
         gap: 1.2rem;
 
         @include m.tablet() {
@@ -246,6 +246,10 @@
     &__strong {
         &--core {
             color: v.$blue;
+        }
+
+        &--nuevo {
+            color: $primary;
         }
     }
 
