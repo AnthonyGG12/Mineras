@@ -5,12 +5,49 @@
 .prioriza{
 
     .block__principal{
+        display: flex;
+        justify-content: center;
+
+        .caja__criterio {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            gap: 2.5rem;
+            
+        }
 
         .caja__criterios{
             background-color: v.$bg-secondary;
-            padding: 2rem;
             border-radius: 1rem;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+
+            @include m.tablet { 
+                width: 75rem;
+            }
+
+            .caja__titulo {
+                padding: 2rem 2rem 0 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                @include m.tablet {
+                    padding: 4rem 4rem 0 4rem;
+                }
+
+                strong {
+                    font-size: 1.9rem;
+                    text-transform: uppercase;
+                    text-align: center;
+
+                    @include m.laptop { 
+                        text-align: left;
+                    }
+                }
+            }
 
             h3{
                 text-align: center;
@@ -23,7 +60,13 @@
             .caja__botones{
                 display: flex;
                 justify-content: space-between;
-                margin: 2rem 0 0;
+                position: relative;
+                
+                padding: 1.5rem 2rem 2rem 2rem;
+
+                @include m.tablet {
+                    padding: 3rem 4rem 4rem 4rem;
+                }
 
                 button{
                     color: v.$white;
@@ -37,8 +80,207 @@
                         width: 16rem;
                     }
                 }
+
+                .buttons--inactivo {
+                    opacity: 0.5;
+                    cursor: default;
+                }
+
+                .barra {
+                    background-color: $primary;
+                    height: 5px;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    border-radius: 0 .3rem .3rem 0;
+                    transition: 0.5s;
+                }
             }
 
+            .caja__contenido {
+                display: flex;
+                flex-direction: column;
+                gap: 4.5rem;
+                max-height: 22rem;
+                overflow-y: auto;
+                padding: 0 4rem;
+
+                @include m.tablet {
+                    grid-template-columns: 1fr auto;
+                    grid-template-rows: auto;
+                    gap: 1.5rem;
+                }
+
+                &::-webkit-scrollbar {
+                    width: 0.6rem;
+                    background: transparent;
+                    overflow: hidden;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: $primary;
+                    border-radius: 8px;
+                }
+            }
+
+            .caja__fila {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+                align-items: center;
+                gap: 1.5rem;
+                text-align: center;
+
+                @include m.tablet {
+                    grid-template-columns: 1fr auto;
+                    grid-template-rows: auto;
+                    gap: 6rem;
+                    text-align: start;
+                }
+            }
+
+            .caja__proceso {
+                color: #838383;
+            }
+
+            
+
+            .caja__estrella {
+                color: #838383;
+                font-size: 2rem;
+                cursor: pointer;
+                transition: 0.3s;
+
+                &:hover {
+                    color: v.$white;
+                    transform: scale(1.1);
+
+
+                }
+
+                &:hover ~ .caja__estrella {
+                    color: v.$white;
+                }
+                    
+
+            }
+
+
+            .caja__estrellas {
+                display: flex;
+                align-items: center;
+                flex-direction: row-reverse;
+                gap: .8rem;
+                justify-content: center;
+
+
+                @for $i from 1 through 5 {
+
+                    &--inhabilitado#{$i} {
+
+                        // Elemento activo
+                        & > .caja__estrella:nth-child(#{$i}) {
+                            color: #838383;
+                            opacity: 0.9;
+                            cursor: default;
+                            transform: scale(0.8) rotate(-40deg);
+
+                            &:hover {
+                                transform: scale(0.8) rotate(-40deg);
+                            }
+
+                            
+                        }
+
+                    }
+
+
+                }
+
+                @for $i from 1 through 5 {
+
+                    &--activo#{$i} {
+
+                        // Estrellas anteriores
+                        & > .caja__estrella:nth-child(n+#{$i + 1}) {
+                            color: v.$orangeLight;
+                            transform: unset;
+                            opacity: .9;
+                            cursor: default;
+                        }
+
+                        // Elemento activo
+                        & > .caja__estrella:nth-child(#{$i}) {
+                            color: v.$orange;
+                            transform: scale(1.1);
+                            cursor: pointer;
+                            opacity: 1;
+                        }
+
+                        // Estrellas posteriores
+                        & > .caja__estrella:nth-child(-n+#{$i - 1}) {
+                            color: #838383;
+                            transform: scale(0.9);
+                            cursor: default;
+                            opacity: 1;
+                        }
+                    }
+
+                    @for $j from 1 through 5 {
+                        &--activo#{$i}.caja__estrellas--inhabilitado#{$j} {
+
+                            @if ($j > $i) {
+
+                                // Elemento activo
+                                & > .caja__estrella:nth-child(#{$j}) {
+                                    color: v.$orangeLight;
+                                    transform: unset;
+                                    opacity: .9;
+                                    cursor: default;
+
+                                    &:hover {
+                                        transform: unset;
+                                    }
+
+                                    &:hover ~ .caja__estrella {
+                                        color: v.$orangeLight;
+                                    }
+                                }
+                            } 
+
+                            @else {
+                                & > .caja__estrella:nth-child(#{$j}) {
+                                    color: #838383;
+                                    transform: scale(0.9);
+                                    cursor: default;
+                                    opacity: 1;
+
+                                    &:hover {
+                                        color: #838383;
+                                        transform: scale(0.9) rotate(0);
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+    
+                        }
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        .caja__slider {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .caja__contenedor {
+            display: flex;
+            transition: 0.5s;
+            height: 100%;
         }
         
         @include m.laptop { 

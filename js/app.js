@@ -103,7 +103,7 @@ modificarSteps();
 
 // Seccion AREA - seleccionar card
 
-const cardAreas = document.querySelectorAll(".card");
+const cardAreas = document.querySelectorAll(".area .card");
 
 for(let i=0; i<cardAreas.length; i++) {
     cardAreas[i].addEventListener("click",()=>{
@@ -123,7 +123,9 @@ for (let i=0; i<cardAreas.length; i++){
     areas.push(area);
 }
 
-console.log(areas);
+console.group('ARREGLO AREAS');
+  console.table(areas);
+console.groupEnd();
 
 function seleccionarArea(nombre) {
     for (let i=0; i<areas.length; i++) {
@@ -293,7 +295,10 @@ document.addEventListener('DOMContentLoaded', function() {
         );
     }
   
-    console.log(todosProcesos);
+    console.group('ARREGLO PROCESOS');
+        console.table(todosProcesos);
+    console.groupEnd();
+
     iterador = todosProcesos.length;
 });
 
@@ -369,6 +374,7 @@ for (let i=0; i < todosProcesos.length; i++) {
 
         // * Actualizar diseño
         actualizarProcesos(i);
+
     })
 
     if (todosProcesos[i].rpa) {
@@ -456,11 +462,15 @@ function actualizarProcesos(posicicion) {
         // * Actualizar en el carrito
         eliminarProcesoDelCarrito(posicicion);
 
+
     }
 
     // * Verificar elementos del carrito y mostrar mensaje
 
     verificarCarrito()
+
+    // * Actualizar en la priorizacion
+    modificarProcesosPriorizacion()
 }
 
 // ! FILTRAR MIENTRAS SE ESCRIBE EN EL BUSCADOR
@@ -577,6 +587,8 @@ btnBotonNuevo.addEventListener("click", ()=>{
 
     iterador++;
 
+    // * Actualizar procesos de priorizacion
+    modificarProcesosPriorizacion()
 })
 
 
@@ -680,6 +692,9 @@ function eliminarProcesoDelCarrito(id) {
     }
 
     carrito.removeChild(procesoEliminar);
+
+    // * Actualizar procesos de priorizacion
+    modificarProcesosPriorizacion()
 }
 
 // ! ELIMINAR DEL CARRITO LOS PROCESOS DESELECCIONADOS - DEL CARRITO
@@ -726,6 +741,13 @@ function eliminarProcesoDelCarrito2(elemento, id) {
         verificarCarrito()
     }, 600) // igual al que arriba
 
+    
+    // * Actualizar procesos de priorizacion
+
+    setTimeout(()=>{
+        modificarProcesosPriorizacion()
+    }, 600) // igual al que arriba
+
 }
 
 // ! MOSTRAR MENSAJE QUE NO HAY ELEMENTOS EN EL CARRITO
@@ -769,12 +791,17 @@ function moverAbajo(elemento) {
                 elementoSiguiente.style.transition = "0s";
 
                 carrito.insertBefore(elementoSiguiente, elementoActual);
+
+                // * Actualizar procesos de priorizacion
+                modificarProcesosPriorizacion()
         
             }, 500)
 
             break;
         }
     }
+
+    
 }
 
 function moverArriba(elemento) {
@@ -798,11 +825,352 @@ function moverArriba(elemento) {
                 elementoAnterior.style.transition = "0s";
 
                 carrito.insertBefore(elementoActual, elementoAnterior);
-        
+                
+                // * Actualizar procesos de priorizacion
+                modificarProcesosPriorizacion()
+
             }, 500)
 
             break;
         }
     }
+
+    
 }
 
+
+
+// ! ------------------ SECCION ESCOGE TUS CRITERIOS ----------------------
+
+// ! MOSTRAR LOS CRITERIOS SELECCIONADOS
+
+const cardcriterios = document.querySelectorAll(".criterios .card");
+
+for(let i=0; i<cardcriterios.length; i++) {
+    cardcriterios[i].addEventListener("click",()=>{
+        cardcriterios[i].classList.toggle("card--seleccionado");
+        seleccionarCriterio(cardcriterios[i].children[0].innerHTML);
+        mostrarPriorizacion();
+        modificarBarra()
+        modificarProcesosPriorizacion()
+    })
+}
+
+
+// Arreglos de las criterios
+
+const criterios = [];
+
+for (let i=0; i<cardcriterios.length; i++){
+    let criterio = [`${cardcriterios[i].children[0].innerHTML}`, false];
+    criterios.push(criterio);
+}
+
+console.group('ARREGLO CRITERIOS');
+  console.table(criterios);
+console.groupEnd();
+
+
+function seleccionarCriterio(nombre) {
+    for (let i=0; i<criterios.length; i++) {
+        if (criterios[i][0] == nombre) {
+            if (criterios[i][1] == false) {
+                criterios[i][1] = true;
+            } else {
+                criterios[i][1] = false;
+            }
+        }
+    }
+}
+
+
+
+//Asignar cada criterio seleccionada a un div
+
+let cajaContenedor = document.querySelector(".prioriza .caja__contenedor");
+
+
+for (let i=0; i<cajaContenedor.children.length; i++) {
+    if (i != cajaContenedor.children.length-1) {
+        
+console.log(criterios[i][0])
+        cajaContenedor.children[i].setAttribute("data-nombre_criterio", `${criterios[i][0]}`);
+
+    }
+}
+
+
+
+let seccionActual2 = 1;
+let cantidadSlider2 = 0;
+
+// Mostrar las secciones de los criterios seleccionados
+
+function mostrarPriorizacion() {
+    let siElementos = false;
+
+    // * Resetear
+    cantidadSlider2 = 0;
+    seccionActual2 = 1;
+    cajaContenedor.style.marginLeft = `0%`;
+
+    for (let i=0; i<criterios.length; i++) {
+
+        for(let j=0; j<cajaContenedor.children.length-1; j++) {
+            let nombreArea = cajaContenedor.children[j].getAttribute('data-nombre_criterio');
+
+            if (criterios[i][0].toLowerCase() === nombreArea.toLowerCase()) {
+                if (criterios[i][1]) {
+                    cajaContenedor.children[j].style.display = "flex";
+                    siElementos = true;
+                    cantidadSlider2++;
+                } else {
+                    cajaContenedor.children[j].style.display = "none";
+                }
+            }
+        }
+        
+    }
+
+    if(siElementos) {
+        cajaContenedor.children[cajaContenedor.children.length-1].style.display = "none";
+    } else {
+        cajaContenedor.children[cajaContenedor.children.length-1].style.display = "flex";
+        cantidadSlider2++;
+    }
+
+
+    // * Dar tamaño al slider
+    cajaContenedor.style.width = `${cantidadSlider2*100}%`;
+
+    //
+    validarBotones2();
+
+}
+
+// ! Slider
+
+const btnDerecho2 = document.querySelector('.prioriza .derecha');
+const btnIzquierdo2 = document.querySelector('.prioriza .izquierda');
+
+
+mostrarPriorizacion()
+
+
+// ! Funciones al iniciar el programa
+validarBotones2();
+
+// Funcionalidad a los botones
+
+btnDerecho2.addEventListener('click', (e)=>{
+    moverDerecha2();
+    validarBotones2();
+    modificarBarra()
+})
+
+btnIzquierdo2.addEventListener('click', (e)=>{
+    moverIzquierda2();
+    validarBotones2();
+    modificarBarra()
+})
+
+function moverDerecha2() {
+    if (seccionActual2 != cantidadSlider2) {
+        cajaContenedor.style.marginLeft = `-${seccionActual2*100}%`;
+        seccionActual2++;
+    }
+}
+
+function moverIzquierda2() {
+    if (seccionActual2 != 1) {
+        cajaContenedor.style.marginLeft = `-${(seccionActual2-2)*100}%`;
+        seccionActual2--;
+    }
+}
+
+function validarBotones2() {
+    if (cantidadSlider2 < 2) {
+        btnIzquierdo2.classList.add("buttons--inactivo");
+        btnDerecho2.classList.add("buttons--inactivo");
+    } else {
+        if (seccionActual2 == 1) {
+            btnIzquierdo2.classList.add("buttons--inactivo");
+            btnDerecho2.classList.remove("buttons--inactivo");
+        } 
+    
+        else if (seccionActual2 == cantidadSlider2) {
+            btnIzquierdo2.classList.remove("buttons--inactivo");
+            btnDerecho2.classList.add("buttons--inactivo");
+        } else {
+            btnDerecho2.classList.remove("buttons--inactivo");
+            btnIzquierdo2.classList.remove("buttons--inactivo");
+        }
+    }
+
+}
+
+const barra = document.querySelector(".prioriza .barra");
+
+function modificarBarra() {
+    if (cantidadSlider2 < 2) {
+        barra.style.width = "0";
+    } 
+    
+    else {
+        if (seccionActual2 == 1) {
+            barra.style.width = "1.5rem";
+        } 
+        
+        else {
+            barra.style.width = `${((seccionActual2-1)*100)/(cantidadSlider2-1)}%`;
+        }
+    }
+}
+
+modificarBarra()
+
+// ! FUNCIONALIDAD DE LAS ESTRELLAS
+
+function agregarFuncionalidadEstrellas() {
+    let estrellas = document.querySelectorAll(".prioriza .caja__estrella");
+
+    for(let i = 0; i<estrellas.length; i++) {
+        if (i<5) {
+            estrellas[i].setAttribute("onclick", `calificar(this, ${i})`);
+        }
+        else {
+            estrellas[i].setAttribute("onclick", `calificar(this, ${i%5})`);
+        }
+    }
+}
+
+
+function calificar(estrella, posicicion) {
+    let pos = posicicion+1;
+    let padre = estrella.parentNode;
+    let siContieneClase = false;
+
+    if (!padre.classList.contains(`caja__estrellas--inhabilitado${pos}`)) {
+        // Quitamos las clases
+        for(let i=0; i<5; i++) {
+            if (padre.classList.contains(`caja__estrellas--activo${i+1}`)) {
+                siContieneClase = true;
+                break;
+            }
+        }
+
+        if (siContieneClase) {
+            if (padre.classList.contains(`caja__estrellas--activo${pos}`)) {
+                padre.classList.remove(`caja__estrellas--activo${pos}`)
+                quitarInhabilitadoHermanos(padre, posicicion);
+            } else {
+                //nada
+            }
+        } else {
+            padre.classList.add(`caja__estrellas--activo${pos}`)
+            agregarInhabilitadoHermanos(padre, posicicion)
+        }
+
+    }
+
+}
+
+function agregarInhabilitadoHermanos(padre, posicicion) {
+    let todos = padre.parentNode.parentNode.querySelectorAll(".caja__estrellas")
+    for(let i=0; i < todos.length; i++) {
+        if (todos[i] != padre) {
+            todos[i].classList.add(`caja__estrellas--inhabilitado${posicicion+1}`);
+        }
+    }
+}
+
+function quitarInhabilitadoHermanos(padre, posicicion) {
+    let todos = padre.parentNode.parentNode.querySelectorAll(".caja__estrellas")
+    for(let i=0; i < todos.length; i++) {
+        if (todos[i] != padre) {
+            todos[i].classList.remove(`caja__estrellas--inhabilitado${posicicion+1}`);
+        }
+    }
+}
+
+// ! Mostrar procesos en todos los criterios
+
+let priorizacion = [];
+const listaProcesosPrio = document.querySelectorAll(".prioriza .caja__contenido");
+
+function modificarProcesosPriorizacion() {
+
+    priorizacion = [];
+
+    for (let i=0; i<5; i++) {
+        
+        if (carrito.children[i] !== undefined) {
+            priorizacion.push(
+                {
+                    area: carrito.children[i].querySelector("strong").innerHTML.replace(/\s+/g, ' ').trim(),
+                    proceso: carrito.children[i].querySelector("p").innerHTML.replace(/\s+/g, ' ').trim(),
+                    calificacion: []
+                }
+            )
+        }
+    }
+
+    for(let i=0; i<priorizacion.length; i++) {
+        for(let j=0; j<criterios.length; j++) {
+            if (criterios[j][1]) {
+                priorizacion[i].calificacion.push(
+                    {
+                        criterio: criterios[j][0],
+                        calificacion: 0
+                    }
+                )
+            }
+        }
+    }
+
+    let elementos = "";
+    let siElementos = false;
+
+    for (let j=0; j<5; j++) {
+        if (priorizacion[j] !== undefined) {
+            siElementos = true;
+            elementos += `
+                <div class="caja__fila">
+                    <p class="caja__proceso">
+                        ${priorizacion[j].proceso}
+                    </p>
+                    <div class="caja__estrellas">
+                        <i class="fa-solid fa-star caja__estrella"></i>
+                        <i class="fa-solid fa-star caja__estrella"></i>
+                        <i class="fa-solid fa-star caja__estrella"></i>
+                        <i class="fa-solid fa-star caja__estrella"></i>
+                        <i class="fa-solid fa-star caja__estrella"></i>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    if (!siElementos) {
+        elementos = `
+            <div class="caja__fila">
+                <p class="caja__proceso">
+                    No hay ningún proceso en el carrito 
+                </p>
+            </div>
+        `;
+    }
+    
+
+    for(let i=0; i<criterios.length; i++) {
+
+        if (criterios[i][1]) {
+            listaProcesosPrio[i].innerHTML = elementos;
+        }
+    }
+
+
+    agregarFuncionalidadEstrellas()
+
+
+}
