@@ -893,7 +893,6 @@ let cajaContenedor = document.querySelector(".prioriza .caja__contenedor");
 for (let i=0; i<cajaContenedor.children.length; i++) {
     if (i != cajaContenedor.children.length-1) {
         
-console.log(criterios[i][0])
         cajaContenedor.children[i].setAttribute("data-nombre_criterio", `${criterios[i][0]}`);
 
     }
@@ -1066,12 +1065,17 @@ function calificar(estrella, posicicion) {
             } else {
                 //nada
             }
+
+            puntuar(padre, pos, false);
+
         } else {
             padre.classList.add(`caja__estrellas--activo${pos}`)
             agregarInhabilitadoHermanos(padre, posicicion)
+            puntuar(padre, pos, true);
         }
 
     }
+
 
 }
 
@@ -1121,7 +1125,7 @@ function modificarProcesosPriorizacion() {
                 priorizacion[i].calificacion.push(
                     {
                         criterio: criterios[j][0],
-                        calificacion: 0
+                        puntaje: 0
                     }
                 )
             }
@@ -1172,5 +1176,48 @@ function modificarProcesosPriorizacion() {
 
     agregarFuncionalidadEstrellas()
 
+
+}
+
+function puntuar(padre, pos, hasClass) {
+    let contenido = padre.parentNode.parentNode;
+    let fila = padre.parentNode;
+    let nombreCriterio = padre.parentNode.parentNode.parentNode.getAttribute("data-nombre_criterio");
+    let posProceso;
+    let posCriterio;
+
+    for(let i=0; i<contenido.children.length; i++) {
+        if (contenido.children[i] == fila) {
+            posProceso = i;
+            break
+        }
+    }
+
+    for(let i=0; i<priorizacion[posProceso].calificacion.length; i++) {
+        if(priorizacion[posProceso].calificacion[i].criterio == nombreCriterio) {
+            posCriterio = i;
+            break
+        }
+    }
+
+    if(hasClass) {
+        priorizacion[posProceso].calificacion[posCriterio].puntaje = convertirPuntaje(pos);
+    } else {
+        priorizacion[posProceso].calificacion[posCriterio].puntaje = 0;
+    }
+
+
+    console.log(priorizacion)
+}
+
+function convertirPuntaje(numero) {
+    if (numero == 5) return 1
+    if (numero == 4) return 2
+    if (numero == 3) return 3
+    if (numero == 2) return 4
+    if (numero == 1) return 5
+}
+
+function mostrarResultados() {
 
 }
