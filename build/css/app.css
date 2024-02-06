@@ -12595,6 +12595,10 @@ p {
   }
 }
 
+#industria {
+  display: none;
+}
+
 .preguntas .blockPreguntas .pregunta {
   margin: 2.5rem 0;
   background-color: #242B35;

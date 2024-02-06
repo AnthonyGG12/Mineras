@@ -42,6 +42,9 @@ function moverDerecha() {
         slider.style.marginLeft = `-${seccionActual*100}%`;
         seccionActual++;
     }
+    if (seccionActual == 7) {
+        mostrarResultados()
+    }
     console.log(seccionActual)
 }
 
@@ -1219,5 +1222,23 @@ function convertirPuntaje(numero) {
 }
 
 function mostrarResultados() {
+    let suma = [["", 0],["", 0],["", 0],["", 0],["", 0]];
 
+    for (let i=0; i<priorizacion.length; i++) {
+        suma[i][0] += priorizacion[i].proceso;
+        for(let j=0; j<priorizacion[i].calificacion.length; j++) {
+            suma[i][1] += priorizacion[i].calificacion[j].puntaje;
+        }
+    }
+
+    console.log(suma);
 }
+
+
+// ! SECCION DE AGENDAR CITA
+
+const industria = document.querySelector("#industria")
+let detalles = `Hola mundo aqui salto\n esto es una linea nueva`;
+let detallesFinal = detalles.replaceAll(" ", "+").replaceAll("\n", "%0A");
+let url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Automatización+para+la+industria+de+${industria}&dates=20240427T070000-0500/20240427T235900-0500&details=${detallesFinal}&add=leonidas.yauri%40dignita.tech&remind=0`;
+console.log(detallesFinal)
