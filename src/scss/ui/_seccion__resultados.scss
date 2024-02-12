@@ -1,0 +1,39 @@
+@use 'utils/mixins' as m;
+@use 'utils/variables' as v;
+@use '../custom' as *;
+
+.resultados {
+
+    .block__principal {
+        display: flex;
+
+        @include m.tablet() {
+            max-height: unset;
+            overflow-y: visible;
+        }
+
+        .grafico {
+            height: 100%;
+        }
+    }
+
+
+    .imagenDigni{
+        height: 20rem;
+
+        @include m.bgDigni('../../build/img/1.webp', 18rem);
+      
+        @include m.laptop { 
+            width: 50%;
+            height: 40rem;
+            @include m.bgDigni('../../build/img/6.webp', 28rem);
+            transform: rotateY(180deg)
+        }
+      
+        @include m.desktop { 
+            width: unset;
+            height: 32rem;
+            @include m.bgDigni('../../build/img/1.webp', 28rem);
+        }
+    }
+}

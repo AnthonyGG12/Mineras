@@ -156,7 +156,7 @@ p{
     position: relative;
     width: 3.5rem;
     height: 3.5rem;
-    border: 0.5rem solid v.$white;
+    border: 0.3rem solid v.$white;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -164,21 +164,23 @@ p{
     transition: 0.4s;
 
     &--activo {
-      border: 0.5rem solid $primary;
+      border: 0.3rem solid $primary;
     }
   }
 
   .smallStep {
+    color: v.$white;
+    transition: 0.4s;
     position: absolute;
+    /*
     width: 1.3rem;
     height: 1.3rem;
-    background-color: v.$white;
     border-radius: 50%;
-    transition: 0.4s;
+    */
     
 
     &--activo {
-      background-color: $primary;
+      color: $primary;
     }
   }
 

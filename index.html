@@ -12,13 +12,15 @@
     <!-- ICONS -->
     <script src="https://kit.fontawesome.com/745852fa0a.js" crossorigin="anonymous"></script>
 
-    <!-- JAVASCRIPT-->
-    <script src="js/app.js" defer></script>
-
     <!-- LOGO EN PESTAÑA-->
     <link rel="icon" href="https://dignita.tech/wp-content/uploads/2022/05/cropped-digniya-ico-32x32.png" sizes="32x32" />
     <link rel="icon" href="https://dignita.tech/wp-content/uploads/2022/05/cropped-digniya-ico-192x192.png" sizes="192x192" />
     <link rel="apple-touch-icon" href="https://dignita.tech/wp-content/uploads/2022/05/cropped-digniya-ico-180x180.png" />
+
+    <!-- JAVASCRIPT-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js" defer></script>
+    <script src="js/app.js" defer></script>
+
 
 </head>
 <body>
@@ -41,39 +43,39 @@
                         </div>
                         <nav class="navSteps d-flex">
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-question smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-arrow-pointer smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-check smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-cart-shopping smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-arrow-pointer smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-star smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-clipboard smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-calendar smallStep"></i>
                             </li>
                             <li class="smallLine"></li>
                             <li class="bigStep">
-                                <div class="smallStep"></div>
+                                <i class="fa-solid fa-paper-plane smallStep"></i>
                             </li>
                         </nav>
                         <div class="containerLine">
@@ -1108,18 +1110,24 @@
 
                             <!-- ---SECCION 7 -- MOSTRAR RESULTADOS--- -->
     
-                            <div class="slider__seccion mostrarResultados">
+                            <div class="slider__seccion resultados">
 
                                 <h2 class="heading__secciones">Mostrar Resultados</h2>
 
                                 <div class="block__contenido">
 
                                     <div class="block__principal">
-
+                                        <canvas class="grafico"></canvas>
                                     </div>
 
                                     <div class="block__mensaje">
+                                        <p class="block__mensaje__parrafo">
+                                            Estos son tus resultados de ponderación. Agenda un cita con nuestros expertos para ayudarte a ahorrar millones de dólares.
+                                        </p>
 
+                                        <div class="imagenDigni mt-5 mt-md-2">
+                                            
+                                        </div>
                                     </div>
 
                                 </div>
@@ -1135,7 +1143,7 @@
                                 <div class="block__contenido block__contenido--invertido">
 
                                     <div class="block__principal">
-
+                                        <button><a href="#" class="btnAgenda">Agendar cita</a></button>
                                     </div>
 
                                     <div class="block__mensaje">

@@ -49,11 +49,12 @@ function moverDerecha() {
 }
 
 function moverIzquierda() {
-    if (seccionActual != 1) {
+    if (seccionActual != 1 && seccionActual != cantidadSlider) {
         animacionEncabezado();
         slider.style.marginLeft = `-${(seccionActual-2)*100}%`;
         seccionActual--;
     }
+
 }
 
 function validarBotones() {
@@ -62,6 +63,7 @@ function validarBotones() {
     }
     else if (seccionActual == cantidadSlider) {
         btnDerecho.classList.add("buttons--inactivo");
+        btnIzquierdo.classList.add("buttons--inactivo");
     } else {
         btnDerecho.classList.remove("buttons--inactivo");
         btnIzquierdo.classList.remove("buttons--inactivo");
@@ -1209,8 +1211,6 @@ function puntuar(padre, pos, hasClass) {
         priorizacion[posProceso].calificacion[posCriterio].puntaje = 0;
     }
 
-
-    console.log(priorizacion)
 }
 
 function convertirPuntaje(numero) {
@@ -1221,24 +1221,172 @@ function convertirPuntaje(numero) {
     if (numero == 1) return 5
 }
 
+let suma = [];
+
 function mostrarResultados() {
-    let suma = [["", 0],["", 0],["", 0],["", 0],["", 0]];
+    suma = [["", 0],["", 0],["", 0],["", 0],["", 0]];
 
     for (let i=0; i<priorizacion.length; i++) {
         suma[i][0] += priorizacion[i].proceso;
         for(let j=0; j<priorizacion[i].calificacion.length; j++) {
-            suma[i][1] += priorizacion[i].calificacion[j].puntaje;
+            suma[i][1] += priorizacion[i].calificacion[j].puntaje * 10;
         }
     }
 
-    console.log(suma);
+    // Ordenamos el arreglo de mayor a menor
+    suma.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+
+    console.group('ARREGLO SUMA');
+        console.table(suma);
+    console.groupEnd();
+
+    generarDetallesCita()
+}
+
+// ! SECCION DE MOSTRAR RESULTADOS
+
+const $grafico = document.querySelector(".grafico");
+
+function mostrarGrafico(arreglo) {
+
+    console.log(arreglo)
+
+    let procesos = arreglo.map(function(elemento) {
+        return elemento[0]; // Obteniendo el primer elemento de cada subarreglo
+    });
+
+    let puntajes = arreglo.map(function(elemento) {
+        return elemento[1]; // Obteniendo el segundo elemento de cada subarreglo
+    });
+
+    // Las etiquetas son las porciones de la gráfica
+    let etiquetas = procesos;
+    //etiquetas5 = etiquetas5.filter(elemento => elemento !== "" && elemento !== ",");
+    let datos = puntajes;
+    //datos5 = datos5.filter(elemento => elemento !== "" && elemento !== ",");
+    // Podemos tener varios conjuntos de datos. Comencemos con uno
+    const datosIngresos = {
+        data: datos, // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
+        // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
+        backgroundColor: [
+            'rgba(252,77,25, 1)',
+            'rgba(252,156,69, 1)',
+            'rgba(201,255,69, 1)',
+            'rgba(69,255,207, 1)',
+            'rgba(36,43,53, 1)'
+        ],// Color de fondo
+        borderColor: [
+            'rgba(252,77,25, 0.4)',
+            'rgba(252,156,69, 0.4)',
+            'rgba(201,255,69, 0.4)',
+            'rgba(69,255,207, 0.4)',
+            'rgba(36,43,53, 0.4)'
+        ],// Color del borde
+        borderWidth: 1,// Ancho del borde
+    };
+    new Chart($grafico, {
+        type: 'pie',// Tipo de gráfica. Puede ser dougnhut o pie
+        data: {
+            labels: etiquetas,
+            datasets: [
+                datosIngresos,
+                // Aquí más datos...
+            ]
+        },
+    });
 }
 
 
 // ! SECCION DE AGENDAR CITA
 
-const industria = document.querySelector("#industria")
-let detalles = `Hola mundo aqui salto\n esto es una linea nueva`;
-let detallesFinal = detalles.replaceAll(" ", "+").replaceAll("\n", "%0A");
-let url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Automatización+para+la+industria+de+${industria}&dates=20240427T070000-0500/20240427T235900-0500&details=${detallesFinal}&add=leonidas.yauri%40dignita.tech&remind=0`;
-console.log(detallesFinal)
+const btnAgendarCita = document.querySelector(".btnAgenda");
+
+btnAgendarCita.addEventListener("click", ()=>{
+
+})
+
+function generarDetallesCita() {
+    let detalles = `CRITERIOS\n\n`;
+    let contador = 0;
+
+    for(let i=0; i<criterios.length; i++) {
+        if(criterios[i][1]) {
+            detalles += `• ${criterios[i][0]}\n`
+        }
+    }
+
+    detalles += `\n\nPRIORIZACIÓN\n\n`;
+
+    /*
+    for(let i=0; i<priorizacion.length; i++) {
+        for(let j=0; j<suma.length; j++) {
+            if (suma[j][0] == priorizacion[i].proceso) {
+                detalles += `• Proceso ${i+1}:\n\nÁrea: ${priorizacion[i].area}\n`;
+                detalles += `Nombre: ${priorizacion[i].proceso}\n`;
+                detalles += `Puntaje: ${suma[j][1]}\n\n`
+                contador = i;
+            }
+        }
+    }
+    */
+
+    let resultados = [];
+
+    for(let i=0; i<suma.length; i++) {
+        for(let j=0; j<priorizacion.length; j++) {
+            if (suma[i][0] == priorizacion[j].proceso) {
+                detalles += `• Proceso ${i+1}:\n\nÁrea: ${priorizacion[j].area}\n`;
+                detalles += `Nombre: ${suma[i][0]}\n`;
+                detalles += `Puntaje: ${suma[i][1]}\n\n`
+
+                let arreglo = [];
+                
+                arreglo.push(suma[i][0]);
+                arreglo.push(suma[i][1]);
+
+                resultados.push(arreglo)
+
+                contador = i;
+            }
+        }
+    }
+
+    console.log(resultados)
+
+    mostrarGrafico(resultados)
+
+    contador++;
+
+    detalles += `\nAUTOMATIZACIÓN\n\n`;
+
+    for(let i=contador; i<carrito.children.length; i++) {
+        let texto = carrito.children[i].querySelector("p").innerHTML.replace(/\s+/g, ' ').trim();
+        let area = carrito.children[i].querySelector("strong").innerHTML.replace(/\s+/g, ' ').trim();
+
+        detalles += `• Proceso ${i+1}:\n\nÁrea: ${area}\n`;
+        detalles += `Nombre: ${texto}\n\n`;
+    }
+
+    const industria = document.querySelector("#industria").textContent;
+
+    const fechaActual = new Date();
+
+    let hora = `07`;
+
+    let diaActual = formatearFecha(fechaActual.getDate());
+
+    var mesActual = formatearFecha(fechaActual.getMonth() + 1); // Se suma 1 porque los meses van de 0 a 11
+
+    let anio = fechaActual.getFullYear();
+    let detallesFinal = detalles.replaceAll(" ", "+").replaceAll("\n", "%0A");
+    let url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Reunión:+Automatización+para+la+industria+de+${industria}&dates=${anio}0427T${hora}0000-0500/${anio}0427T${hora+1}0000-0500&details=${detallesFinal}&add=leonidas.yauri%40dignita.tech&remind=0`;
+    console.log(detallesFinal)
+
+    //window.location.href = url;
+}
+
+function formatearFecha(fecha) {
+    return fecha < 10 ? '0' + fecha : fecha;
+}

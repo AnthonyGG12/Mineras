@@ -12300,7 +12300,7 @@ p {
   position: relative;
   width: 3.5rem;
   height: 3.5rem;
-  border: 0.5rem solid #fff;
+  border: 0.3rem solid #fff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -12308,19 +12308,21 @@ p {
   transition: 0.4s;
 }
 .bigStep--activo {
-  border: 0.5rem solid #FC4D19;
+  border: 0.3rem solid #FC4D19;
 }
 
 .smallStep {
+  color: #fff;
+  transition: 0.4s;
   position: absolute;
+  /*
   width: 1.3rem;
   height: 1.3rem;
-  background-color: #fff;
   border-radius: 50%;
-  transition: 0.4s;
+  */
 }
 .smallStep--activo {
-  background-color: #FC4D19;
+  color: #FC4D19;
 }
 
 .smallLine {
@@ -14194,5 +14196,46 @@ p {
     background-position: top center;
     background-repeat: no-repeat;
     background-size: 25rem;
+  }
+}
+
+.resultados .block__principal {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .resultados .block__principal {
+    max-height: unset;
+    overflow-y: visible;
+  }
+}
+.resultados .block__principal .grafico {
+  height: 100%;
+}
+.resultados .imagenDigni {
+  height: 20rem;
+  background-image: url("../../build/img/1.webp");
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: 18rem;
+}
+@media (min-width: 1024px) {
+  .resultados .imagenDigni {
+    width: 50%;
+    height: 40rem;
+    background-image: url("../../build/img/6.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 28rem;
+    transform: rotateY(180deg);
+  }
+}
+@media (min-width: 1440px) {
+  .resultados .imagenDigni {
+    width: unset;
+    height: 32rem;
+    background-image: url("../../build/img/1.webp");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 28rem;
   }
 }
