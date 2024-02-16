@@ -37,7 +37,7 @@ function animacionEncabezado() {
 }
 
 function moverDerecha() {
-    if (seccionActual != cantidadSlider) {
+    if (seccionActual != cantidadSlider && seccionActual != (cantidadSlider-1)) {
         animacionEncabezado();
         slider.style.marginLeft = `-${seccionActual*100}%`;
         seccionActual++;
@@ -61,6 +61,9 @@ function validarBotones() {
     if (seccionActual == 1) {
         btnIzquierdo.classList.add("buttons--inactivo");
     }
+    else if (seccionActual == (cantidadSlider-1)) {
+        btnDerecho.classList.add("buttons--inactivo");
+    }
     else if (seccionActual == cantidadSlider) {
         btnDerecho.classList.add("buttons--inactivo");
         btnIzquierdo.classList.add("buttons--inactivo");
@@ -68,6 +71,8 @@ function validarBotones() {
         btnDerecho.classList.remove("buttons--inactivo");
         btnIzquierdo.classList.remove("buttons--inactivo");
     }
+
+    
 }
 
 // STEPS
@@ -1251,8 +1256,6 @@ const $grafico = document.querySelector(".grafico");
 
 function mostrarGrafico(arreglo) {
 
-    console.log(arreglo)
-
     let procesos = arreglo.map(function(elemento) {
         return elemento[0]; // Obteniendo el primer elemento de cada subarreglo
     });
@@ -1271,17 +1274,17 @@ function mostrarGrafico(arreglo) {
         data: datos, // La data es un arreglo que debe tener la misma cantidad de valores que la cantidad de etiquetas
         // Ahora debería haber tantos background colors como datos, es decir, para este ejemplo, 4
         backgroundColor: [
-            'rgba(252,77,25, 1)',
-            'rgba(252,156,69, 1)',
-            'rgba(201,255,69, 1)',
-            'rgba(69,255,207, 1)',
-            'rgba(36,43,53, 1)'
+            'rgba(255,112,66, 0.2)',
+            'rgba(212,255,146, 0.2)',
+            'rgba(190,220,255, 0.2)',
+            'rgba(255,219,149, 0.2)',
+            'rgba(36,43,53, 0.2)'
         ],// Color de fondo
         borderColor: [
-            'rgba(252,77,25, 0.4)',
-            'rgba(252,156,69, 0.4)',
-            'rgba(201,255,69, 0.4)',
-            'rgba(69,255,207, 0.4)',
+            'rgba(255,112,66, 0.4)',
+            'rgba(212,255,146, 0.4)',
+            'rgba(190,220,255, 0.4)',
+            'rgba(255,219,149, 0.4)',
             'rgba(36,43,53, 0.4)'
         ],// Color del borde
         borderWidth: 1,// Ancho del borde
@@ -1298,18 +1301,152 @@ function mostrarGrafico(arreglo) {
     });
 }
 
+const resultadosLista = document.querySelector(".resultados .resultados__lista");
+
+
+function mostrarGraficoNumeros(arreglo) {
+
+    resultadosLista.innerHTML = "";
+
+    if (arreglo.length > 0) {
+        for(let i=0; i<arreglo.length; i++) {
+            resultadosLista.innerHTML += `
+                <li class="resultados__li">
+                    <div class="resultados__header">
+                        <div class="resultados__circulo">${arreglo[i][1]}</div>
+                        <div class="resultados__triangulo"></div>
+                    </div>
+                    <p class="resultados__p">
+                        ${arreglo[i][0]}
+                    </p>
+                </li>
+            `;
+        }
+    }
+    else {
+        resultadosLista.innerHTML = `
+            <li class="blockProcesos__contenedor blockProcesos__contenedor--eliminar">
+                <div class="blockProcesos__div">
+                    <i class="fa-solid fa-face-frown blockProcesos__i"></i>
+                    <span class="blockProcesos__span">Ningún resultado por mostrar</span>
+                </div>
+            </li>
+        `;
+    }
+}
+
+
+const resultadosCambiar = document.querySelector(".resultados .resultados__cambiar");
+
+resultadosCambiar.addEventListener("click", () => {
+    resultadosCambiar.parentNode.classList.toggle("block__principal--activo");
+})
 
 // ! SECCION DE AGENDAR CITA
 
-const btnAgendarCita = document.querySelector(".btnAgenda");
+const btnAgendarCita = document.querySelector(".agendaCita .agendaCita__btnAgenda");
+
+const industria = document.querySelector("#industria").textContent;
+const inputFecha = document.getElementById('fecha');
+
+const fechaActual = new Date().toLocaleDateString('es-PE', {timeZone: 'America/Lima'});
+const horaPeru = new Date().toLocaleTimeString('es-PE', { timeZone: 'America/Lima', hour12: false });
+
+const selectHora = document.getElementById('hora');
+const opcionesHora = selectHora.querySelectorAll('option');
+
+// ! No poner dias anteriores a hoy
+
+const [dia, mes, año] = fechaActual.split('/');
+
+if (parseInt(horaPeru.split(':')[0]) < parseInt(opcionesHora[opcionesHora.length-1].value.split(':')[0])) {
+    inputFecha.min = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+    inputFecha.value = `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+    validarHora()
+} else {
+    inputFecha.min = `${año}-${mes.padStart(2, '0')}-${parseInt(dia.padStart(2, '0')) + 1}`;
+    inputFecha.value = `${año}-${mes.padStart(2, '0')}-${parseInt(dia.padStart(2, '0')) + 1}`;
+}
+
+
+// ! Validar que no ingrese sabados ni domingos
+
+function esFinDeSemana(fecha) {
+    var dia = fecha.getDay();
+    return (dia === 6 || dia === 5); // 6 es sábado, 5 es domingo
+}
+  
+// Agregar un listener de eventos de cambio al input de fecha
+inputFecha.addEventListener('change', function() {
+    var fechaSeleccionada = new Date(this.value);
+    if (esFinDeSemana(fechaSeleccionada)) {
+      alert('No se puede seleccionar sábado ni domingo.');
+      this.value = ''; // Limpiar el valor del input
+    }
+});
+
+let inputNombre = document.querySelector("#nombre");
+let usuario = document.querySelector("#usuario");
+
+
+// ! No se muestren las horas pasadas
+
+window.addEventListener('DOMContentLoaded', function() {
+
+    inputFecha.addEventListener('change', function() {
+
+        // Habilitar todas las opciones de hora si la fecha seleccionada es diferente a la fecha actual
+        if (this.value !== `${año}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`) {
+            opcionesHora[0].selected = true
+            for (let i = 0; i < opcionesHora.length; i++) {
+                opcionesHora[i].disabled = false;
+            }
+        } 
+        else {
+            validarHora()
+        }
+    });
+
+});
+
+function validarHora() {
+    let encontrado = false;
+    
+      // Deshabilitar opciones de hora que ya han pasado
+      for (let i = 0; i < opcionesHora.length; i++) {
+        let horaOpcion = parseInt(opcionesHora[i].value.split(':')[0]);
+        if (horaOpcion <= horaPeru.split(':')[0]) {
+            opcionesHora[i].disabled = true;
+            opcionesHora[0].selected = false;
+        } else {
+            opcionesHora[i].disabled = false;
+            if(!encontrado) {
+                opcionesHora[i].selected = true;
+                encontrado = true;
+            }
+        }
+      }
+    
+}
+
+
+// ! Agendar
 
 btnAgendarCita.addEventListener("click", ()=>{
-
+    agendarCita()
+    mostrarMensajeEnviado()
 })
 
+
+// ! Generar detalles
+
+
+let detallesGeneral = "";
+
 function generarDetallesCita() {
-    let detalles = `CRITERIOS\n\n`;
     let contador = 0;
+
+    let detalles = `CRITERIOS\n\n`;
 
     for(let i=0; i<criterios.length; i++) {
         if(criterios[i][1]) {
@@ -1317,20 +1454,7 @@ function generarDetallesCita() {
         }
     }
 
-    detalles += `\n\nPRIORIZACIÓN\n\n`;
-
-    /*
-    for(let i=0; i<priorizacion.length; i++) {
-        for(let j=0; j<suma.length; j++) {
-            if (suma[j][0] == priorizacion[i].proceso) {
-                detalles += `• Proceso ${i+1}:\n\nÁrea: ${priorizacion[i].area}\n`;
-                detalles += `Nombre: ${priorizacion[i].proceso}\n`;
-                detalles += `Puntaje: ${suma[j][1]}\n\n`
-                contador = i;
-            }
-        }
-    }
-    */
+    detalles += `\nPRIORIZACIÓN\n\n`;
 
     let resultados = [];
 
@@ -1356,6 +1480,7 @@ function generarDetallesCita() {
     console.log(resultados)
 
     mostrarGrafico(resultados)
+    mostrarGraficoNumeros(resultados)
 
     contador++;
 
@@ -1369,24 +1494,57 @@ function generarDetallesCita() {
         detalles += `Nombre: ${texto}\n\n`;
     }
 
-    const industria = document.querySelector("#industria").textContent;
-
-    const fechaActual = new Date();
-
-    let hora = `07`;
-
-    let diaActual = formatearFecha(fechaActual.getDate());
-
-    var mesActual = formatearFecha(fechaActual.getMonth() + 1); // Se suma 1 porque los meses van de 0 a 11
-
-    let anio = fechaActual.getFullYear();
-    let detallesFinal = detalles.replaceAll(" ", "+").replaceAll("\n", "%0A");
-    let url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Reunión:+Automatización+para+la+industria+de+${industria}&dates=${anio}0427T${hora}0000-0500/${anio}0427T${hora+1}0000-0500&details=${detallesFinal}&add=leonidas.yauri%40dignita.tech&remind=0`;
-    console.log(detallesFinal)
-
-    //window.location.href = url;
+    detallesGeneral = detalles;
 }
 
 function formatearFecha(fecha) {
     return fecha < 10 ? '0' + fecha : fecha;
+}
+
+// ! Generar URL
+
+function agendarCita() {
+
+    let hora = selectHora.value;
+    let horaInicio = hora.replace(":", "");
+    let horaFin = `${parseInt(hora.split(':')[0]) + 1}${hora.split(':')[1]}`;
+
+    let fecha = inputFecha.value.replaceAll("-", "");
+
+    //
+
+    let nombre = inputNombre.value;
+    
+    if(nombre == ""){
+        nombre = "Usuario";
+    }
+
+    let detalles = `Nombre: ${nombre}\n\n\n`;
+    detalles += detallesGeneral;
+
+    let detallesFinal = detalles.replaceAll(" ", "+").replaceAll("\n", "%0A");
+
+    let url = `https://calendar.google.com/calendar/u/0/r/eventedit?text=Reunión:+Automatización+para+la+industria+de+${industria}&dates=${fecha}T${horaInicio}0000-0500/${fecha}T${horaFin}0000-0500&details=${detallesFinal}&add=leonidas.yauri%40dignita.tech&remind=0`;
+
+    window.open(url, "_blank");
+
+}
+
+
+// ! SECCION MENSAJE ENVIADO
+
+function mostrarMensajeEnviado() {
+    let nombre = inputNombre.value;
+    if(nombre == ""){
+        usuario.innerHTML = "Usuario";
+    } else {
+        usuario.innerHTML = nombre;
+    }
+
+    // Mover el slider
+    animacionEncabezado();
+    slider.style.marginLeft = `-${seccionActual*100}%`;
+    seccionActual++;
+    validarBotones();
+    modificarSteps();
 }

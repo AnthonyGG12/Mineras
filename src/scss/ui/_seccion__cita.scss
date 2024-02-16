@@ -1,0 +1,83 @@
+@use 'utils/variables' as v;
+@use 'utils/mixins' as m;
+@use '../utils/' as *;
+
+.agendaCita {
+    .block__principal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__form  {
+        width: 100%;
+        max-width: 60rem;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 3rem;
+
+        @include m.tablet {
+            gap: 1.5rem;
+        }
+    }
+
+    &__campo {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 0.8rem;
+        width: 100%;
+
+        @include m.tablet {
+            grid-template-columns: 1fr 15rem;
+            grid-template-rows: auto;
+        }
+    }
+
+    &__input {
+        background-color: v.$gray;
+        border-radius: 1rem;
+        color: v.$white;
+        outline: none;
+        border: none;
+        padding: 0.8rem;
+    }
+
+    &__btnAgenda {
+        padding: 0.7rem 3rem;
+        border-radius: 2rem;
+        border: none;
+        background-color: v.$orange;
+        color: v.$white;
+        font-weight: 600;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: v.$orangeLight;
+        }
+
+        @include m.tablet {
+            margin-top: 3rem;
+        }
+    }
+
+    .imagenDigni{
+        height: 20rem;
+        
+        @include m.bgDigni('../../build/img/6.webp', 18rem);
+      
+        @include m.laptop { 
+            width: 50%;
+            height: 40rem;
+            @include m.bgDigni('../../build/img/6.webp', 38rem);
+        }
+      
+        @include m.desktop { 
+            width: unset;
+            height: 50rem;
+            @include m.bgDigni('../../build/img/6.webp', 30rem);
+        }
+      }
+}

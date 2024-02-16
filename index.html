@@ -1118,6 +1118,13 @@
 
                                     <div class="block__principal">
                                         <canvas class="grafico"></canvas>
+
+                                        <ul class="resultados__lista">
+                                        </ul>
+
+                                        <div class="resultados__cambiar">
+                                            <i class="fa-solid fa-chart-pie"></i>
+                                        </div>
                                     </div>
 
                                     <div class="block__mensaje">
@@ -1143,11 +1150,43 @@
                                 <div class="block__contenido block__contenido--invertido">
 
                                     <div class="block__principal">
-                                        <button><a href="#" class="btnAgenda">Agendar cita</a></button>
+                                        <form action="" class="agendaCita__form">
+                                            <div class="agendaCita__campo">
+                                                <span class="agendaCita__span">Nombre</span>
+                                                <input type="text" class="agendaCita__input" id="nombre" placeholder="Usuario">
+                                            </div>
+                                            <div class="agendaCita__campo">
+                                                <span class="agendaCita__span">Día de reunión</span>
+                                                <input type="date" class="agendaCita__input" id="fecha">
+                                            </div>
+                                            <div class="agendaCita__campo">
+                                                <span class="agendaCita__span">Hora de reunión</span>
+                                                <select name="hora" id="hora" class="agendaCita__input">
+                                                    <option value="09:00">09:00</option>
+                                                    <option value="10:00">10:00</option>
+                                                    <option value="11:00">11:00</option>
+                                                    <option value="12:00">12:00</option>
+                                                    <option value="13:00">13:00</option>
+                                                    <option value="14:00">14:00</option>
+                                                    <option value="15:00">15:00</option>
+                                                    <option value="16:00">16:00</option>
+                                                    <option value="17:00">17:00</option>
+                                                    <option value="18:00">18:00</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" class="agendaCita__btnAgenda">Agendar cita</button>
+                                        </form>
                                     </div>
 
                                     <div class="block__mensaje">
+                                        <p class="block__mensaje__parrafo">
+                                            Completa los campos para concretar una reunión con nuestro equipo de expertos que resolverán tus dudas y te guiarán en construcción de tu robot. Cambia la zona horaria a tu país en Google Calendario.
+                                        </p>
 
+                                        <div class="imagenDigni mt-5 mt-md-2">
+                                            
+                                        </div>
                                     </div>
 
                                 </div>
@@ -1159,6 +1198,14 @@
                             <div class="slider__seccion mensajeEnviado">
                                 
                                 <h2 class="heading__secciones">Mensaje Enviado</h2>
+
+                                <div class="mensajeEnviado__contenedor">
+                                    <div class="mensajeEnviado__contenido">
+                                        <img class="mensajeEnviado__img" src="https://dignita.tech/wp-content/uploads/2023/09/logo-1.png" alt="logo de Dignita Tech">
+                                        <h3 class="mensajeEnviado__h3">Gracias, <span id="usuario">Usuario</span>.<br>Revisa tu correo & Whatsapp</h3>
+                                        <span class="mensajeEnviado__span">Te llegará un mensaje con toda la información<br> de la reunión</span>
+                                    </div>
+                                </div>
                                 
                             </div>
                         </div>
