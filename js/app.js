@@ -151,22 +151,63 @@ function seleccionarArea(nombre) {
 
 // SECCION PROCESOS - Desplegar Áreas
 
-let itemsAreas = document.querySelectorAll(".procesos .blockProcesos__fondo");
+const itemsAreas = document.querySelectorAll(".procesos .blockProcesos__fondo");
+let isClickable = true;
+let isIgnore = false;
 
 itemsAreas.forEach(elemento => {
   elemento.addEventListener("click", ()=>{
 
+    desplegar(elemento)
 
-    let height = 0;
+    // Cerramos los otros collapse de las areas
+
+    for(let i=0; i<blockProcesos.children.length-1; i++) {
+        if (blockProcesos.children[i] != elemento.parentNode) {
+            if(blockProcesos.children[i].classList.contains("blockProcesos__item--desplegado")){
+                isIgnore = true
+                desplegar(blockProcesos.children[i].children[0])
+                isIgnore = false;
+            }
+        }
+    }
+
+  })
+});
+
+function desplegar(elemento) {
+
+    console.log(elemento.parentNode)
+
+    if (!isIgnore) {
+        if (!isClickable) {
+            return; // Salir de la función si no se puede hacer clic
+        }
+    
+        // Desactivar el clic durante 0.5 segundos
+        isClickable = false;
+        setTimeout(() => {
+          isClickable = true;
+        }, 500);
+    }
+
     let collapse = elemento.parentNode.querySelector(".blockProcesos__collapse");
     let contenedor = elemento.parentNode.querySelector(".blockProcesos__collapse__contenedor");
 
     if (!elemento.parentNode.classList.contains("blockProcesos__item--desplegado")) {
-      height = contenedor.scrollHeight;
-
+        collapse.style.height = `${contenedor.clientHeight}px`;
+        setTimeout(()=>{
+            collapse.style.height = `auto`;
+        }, 500)
+    } else {
+        collapse.style.height = `${contenedor.clientHeight}px`;
+        collapse.style.transition = `0s`;
+        setTimeout(()=>{
+            collapse.style.height = `0px`;
+            collapse.style.transition = `0.4s`;
+        }, 10)
     }
 
-    collapse.style.height = `${height}px`;
 
     // Animacion del fondo
 
@@ -178,7 +219,7 @@ itemsAreas.forEach(elemento => {
     } else {
         setTimeout(()=>{
             elemento.style.background = "transparent";
-            elemento.style.transition = "0.2s";
+            elemento.style.transition = "0.3s";
         }, 300)
         
     }
@@ -186,9 +227,7 @@ itemsAreas.forEach(elemento => {
     // Añadimos la clase
 
     elemento.parentNode.classList.toggle("blockProcesos__item--desplegado");
-
-  })
-});
+}
 
 // SECCION PROCESOS - Mostrar solo los procesos de las areas seleccionadas
 
