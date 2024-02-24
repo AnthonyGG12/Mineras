@@ -12198,15 +12198,9 @@ p {
   margin: 0;
 }
 
-body {
-  min-height: 100vh;
-  min-height: fill-available;
-  min-height: -webkit-fill-available;
-}
-
-html {
-  height: fill-available;
-  height: -webkit-fill-available;
+.main {
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
 }
 
 @media (min-width: 1024px) {
@@ -14452,6 +14446,7 @@ html {
   outline: none;
   border: none;
   padding: 0.8rem;
+  width: 100%;
 }
 .agendaCita__btnAgenda {
   padding: 0.7rem 3rem;

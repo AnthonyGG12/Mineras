@@ -36,17 +36,10 @@ p{
     margin: 0;
 }
 
-
-body {
-  min-height: 100vh;
-  min-height: fill-available;
-  min-height: -webkit-fill-available;
+.main {
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
 }
-html {
-  height: fill-available;
-  height: -webkit-fill-available;
-}
-
 
 
 
