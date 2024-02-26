@@ -40,6 +40,9 @@ p{
     margin: 0;
 }
 
+main {
+  height: 100%;
+}
 
 // PRESSETS
 
@@ -89,7 +92,7 @@ p{
   .contenido__steps {
     display: grid;
     grid-template-rows: 12% 76% 12%; // Se divide en 3 partes
-    height: 100vh;
+    height: 100%;
   }
 
   .encabezado {
