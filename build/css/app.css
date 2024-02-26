@@ -12182,6 +12182,11 @@ body {
   line-height: 1.5;
 }
 
+html, body {
+  position: relative;
+  height: 100%;
+}
+
 h1, h2, h3, h4 {
   margin: 0;
 }
@@ -12196,11 +12201,6 @@ li {
 
 p {
   margin: 0;
-}
-
-.main {
-  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-  height: calc(var(--vh, 1vh) * 100);
 }
 
 @media (min-width: 1024px) {
